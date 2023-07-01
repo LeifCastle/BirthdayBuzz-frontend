@@ -5,8 +5,8 @@ export default function User({ user }) {
         <tr>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
-            <td>{user.email}</td>
             <td>{user.jobTitle}</td>
+            <td>{user.email}</td>
         </tr>
     )
 }

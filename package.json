@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "bulma": "^0.9.4",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.7",
     "next": "13.4.7",

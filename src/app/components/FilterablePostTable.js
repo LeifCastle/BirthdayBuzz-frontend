@@ -1,17 +1,18 @@
 'use client'
 import { useEffect, useState } from 'react';
-import UserTable from './UserTable';
+import PostTable from './PostTable';
 
-export default function FilterableUserTable() {
+export default function FilterablePostTable() {
     // state is what the data is representing in realtime
     const [data, setData] = useState(null);
     const [isLoading, setLoading] = useState(true);
   
     useEffect(() => {
-      fetch('http://localhost:8000/users')
+      fetch('http://localhost:8000/posts')
       .then((res) => res.json())
       .then((data) => {
         // data is an object
+        console.log('--- posts ---', data);
         setData(data);
         setLoading(false);
       })
@@ -22,7 +23,7 @@ export default function FilterableUserTable() {
   
     return (
       <main>
-        <UserTable users={data.users}/>
+        <PostTable posts={data.posts}/>
       </main>
     )
   }
