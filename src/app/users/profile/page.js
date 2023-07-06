@@ -1,4 +1,25 @@
+"use client"
+import 'bootstrap/dist/css/bootstrap.css';
+import { useState, useEffect } from 'react';
+
 export default function Profile() {
+    // state is what the data is representing in realtime
+    const [data, setData] = useState(null);
+    const [isLoading, setLoading] = useState(true);
+  
+    useEffect(() => {
+      fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
+      .then((res) => res.json())
+      .then((data) => {
+        // data is an object
+        console.log('--- found user ---', data.user[0]);
+        setData(data.user[0]);
+        setLoading(false);
+      })
+    }, []);
+  
+    if (isLoading) return <p>Loading...</p>
+    if (!data) return <p>No data shown...</p>
     return (
         <div className="container">
             <div className="main-body">
@@ -25,9 +46,9 @@ export default function Profile() {
                                     /> */}
                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" className="rounded-circle" width="150" />
                                     <div className="mt-3">
-                                        <h4>Rome Bell</h4>
-                                        <p className="text-secondary mb-1">Full Stack Developer</p>
-                                        <p className="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                                        <h4>{data.firstName} {data.lastName}</h4>
+                                        <p className="text-secondary mb-1">{data.jobTitle}</p>
+                                        <p className="text-muted font-size-sm">{data.address.city}, {data.address.state}</p>
                                         <button className="btn btn-primary">Follow</button>
                                         <button className="btn btn-outline-primary">Message</button>
                                     </div>
@@ -67,7 +88,7 @@ export default function Profile() {
                                         <h6 className="mb-0">Full Name</h6>
                                     </div>
                                     <div className="col-sm-9 text-secondary">
-                                        Rome Bell
+                                        {data.firstName} {data.lastName}
                                     </div>
                                 </div>
                                 <hr />
@@ -76,7 +97,7 @@ export default function Profile() {
                                         <h6 className="mb-0">Email</h6>
                                     </div>
                                     <div className="col-sm-9 text-secondary">
-                                        rome.bell@generalassemb.ly
+                                    {data.email}
                                     </div>
                                 </div>
                                 <hr />
@@ -85,7 +106,7 @@ export default function Profile() {
                                         <h6 className="mb-0">Phone</h6>
                                     </div>
                                     <div className="col-sm-9 text-secondary">
-                                        (239) 816-9029
+                                    {data.number}
                                     </div>
                                 </div>
                                 <hr />
@@ -94,7 +115,7 @@ export default function Profile() {
                                         <h6 className="mb-0">Mobile</h6>
                                     </div>
                                     <div className="col-sm-9 text-secondary">
-                                        (320) 380-4539
+                                    {data.number}
                                     </div>
                                 </div>
                                 <hr />
@@ -103,7 +124,9 @@ export default function Profile() {
                                         <h6 className="mb-0">Address</h6>
                                     </div>
                                     <div className="col-sm-9 text-secondary">
-                                        Bay Area, San Francisco, CA
+                                    {data.address.streetAddress} 
+                                    <br />
+                                    {data.address.city}, {data.address.state} {data.address.zipCode}
                                     </div>
                                 </div>
                                 <hr />
