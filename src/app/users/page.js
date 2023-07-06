@@ -2,13 +2,13 @@
 import { useEffect, useState } from 'react';
 import UserTable from './UserTable';
 
-export default function FilterableUserTable() {
+export default function Home() {
     // state is what the data is representing in realtime
     const [data, setData] = useState(null);
     const [isLoading, setLoading] = useState(true);
   
     useEffect(() => {
-      fetch('http://localhost:8000/users')
+      fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users`)
       .then((res) => res.json())
       .then((data) => {
         // data is an object

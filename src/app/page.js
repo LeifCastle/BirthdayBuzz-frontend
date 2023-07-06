@@ -4,8 +4,6 @@ import 'bulma/css/bulma.min.css';
 import Image from 'next/image';
 import styles from './page.module.css';
 import { useEffect, useState } from 'react';
-// import FilterableUserTable from './components/FilterableUserTable';
-import FilterablePostTable from './components/FilterablePostTable';
 
 // we are going to be fetching data from our API and displaying it on
 // the page
@@ -18,7 +16,7 @@ export default function Home() {
   const [name, setName] = useState('Dylan');
 
   useEffect(() => {
-    fetch('http://localhost:8000/')
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/`)
       .then((res) => res.json())
       .then((data) => {
         // data is an object
@@ -33,8 +31,6 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <p>{data.message}</p>
-      {/* <FilterableUserTable /> */}
-      <FilterablePostTable />
     </main>
   );
 }
