@@ -132,7 +132,7 @@ export default function Profile() {
                                 <hr />
                                 <div className="row">
                                     <div className="col-sm-12">
-                                        <a className="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                                        <a className="btn btn-info " target="__blank" href="/users/edit">Edit</a>
                                     </div>
                                 </div>
                             </div>
