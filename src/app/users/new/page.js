@@ -40,7 +40,6 @@ const NewUser = () => {
         const newUser = { firstName, lastName, email, jobTitle, number };
         axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/new`, newUser)
             .then(response => {
-                console.log('===> Yay, new user');
                 console.log(response);
                 setRedirect(true);
             })
