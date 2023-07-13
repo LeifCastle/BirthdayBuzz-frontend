@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import jwtDecode from 'jwt-decode';
 import handleLogout from '@/app/utils/handleLogout';
+import setAuthToken from '@/app/utils/setAuthToken';
+
 
 
 export default function EditUser() {
@@ -23,6 +25,8 @@ export default function EditUser() {
 	const [city, setCity] = useState('');
 	const [state, setState] = useState('');
 	const [zipCode, setZipCode] = useState('');
+
+	setAuthToken(localStorage.getItem('jwtToken'));
 
 	const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
     let currentTime = Date.now();
@@ -112,23 +116,22 @@ export default function EditUser() {
 
 	useEffect(() => {
 		if (localStorage.getItem('jwtToken')) {
-			fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
-				.then((res) => res.json())
-				.then((data) => {
+			axois.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
+				.then((response) => {
 					// data is an object
 					let userData = jwtDecode(localStorage.getItem('jwtToken'));
 
-					if (data.user[0].email === userData.email) {
-						setData(data.user[0]);
-						setFirstName(data.user[0].firstName);
-						setLastName(data.user[0].lastName);
-						setEmail(data.user[0].email);
-						setJobTitle(data.user[0].jobTitle);
-						setNumber(data.user[0].number);
-						setStreetAddress(data.user[0].address.streetAddress);
-						setCity(data.user[0].address.city);
-						setState(data.user[0].address.state);
-						setZipCode(data.user[0].address.zipCode);
+					if (response.data.user[0].email === userData.email) {
+						setData(response.data.user[0]);
+						setFirstName(response.data.user[0].firstName);
+						setLastName(response.data.user[0].lastName);
+						setEmail(response.data.user[0].email);
+						setJobTitle(response.data.user[0].jobTitle);
+						setNumber(response.data.user[0].number);
+						setStreetAddress(response.data.user[0].address.streetAddress);
+						setCity(response.data.user[0].address.city);
+						setState(response.data.user[0].address.state);
+						setZipCode(response.data.user[0].address.zipCode);
 						setLoading(false);
 					}
 				})
