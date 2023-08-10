@@ -16,9 +16,9 @@ export default function PageHeader() {
 
   //----Logs the current user out and redirects them to the home page
   function handleLogoutButton() {
-    router.push("/");
-    router.refresh(); //Neccesary to refresh pageHeader tabs when the user logs out from the home page
     handleLogout();
+    router.push("/");
+    window.location.reload(); //Neccesary to refresh pageHeader tabs when the user logs out from the home page
   }
 
   //The purpose of this useEffect is to allow localStorage (which doesn't exist until the window is loaded)
