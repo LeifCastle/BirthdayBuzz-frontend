@@ -18,7 +18,7 @@ export default function PageHeader() {
   function handleLogoutButton() {
     handleLogout();
     router.push("/");
-    window.location.reload(); //Neccesary to refresh pageHeader tabs when the user logs out from the home page
+    window.location.reload(); //Neccesary to refresh pageHeader tabs when the user logs out from the home page not sure why since logout function removes the jwtToken from local storage so it should make no difference what route you're in
   }
 
   //The purpose of this useEffect is to allow localStorage (which doesn't exist until the window is loaded)
