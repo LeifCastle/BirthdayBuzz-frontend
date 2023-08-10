@@ -35,7 +35,7 @@ export default function Login() {
         password,
       })
       .then((response) => {
-        console.log("R:", response);
+        console.log("User Login Response:", response);
         localStorage.setItem("jwtToken", response.data.token);
         localStorage.setItem("email", response.data.userData.email);
         localStorage.setItem("expiration", response.data.userData.exp);

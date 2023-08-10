@@ -1,24 +1,26 @@
 "use client";
 import { useEffect, useState } from "react";
 import setAuthToken from "../utils/setAuthToken";
+
+//--Components
 import PageHeader from "@/components/page_header";
+import BuzzList from "@/components/BuzzList/BuzzList";
 
 export default function Home() {
-  // state is what the data is representing in realtime
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [age, setAge] = useState(null);
   const [name, setName] = useState("Dylan");
 
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/`)
-      .then((res) => res.json())
-      .then((data) => {
-        // data is an object
-        setData(data);
-        setLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // data is an object
+  //       setData(data);
+  //       setLoading(false);
+  //     });
+  // }, []);
 
   // if (isLoading) return <p>Loading...</p>;
   // if (!data) return <p>No data shown...</p>;
@@ -26,9 +28,12 @@ export default function Home() {
   //<p>{data.message}</p>;
 
   return (
-    <main>
+    <>
       <PageHeader />
-      <p>Main Page</p>
-    </main>
+      <main id="flexError" className="flex-col items-center">
+        <p>Main Page</p>
+        <BuzzList />
+      </main>
+    </>
   );
 }
