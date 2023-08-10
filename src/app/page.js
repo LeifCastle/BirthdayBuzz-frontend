@@ -1,11 +1,7 @@
 "use client";
-import Image from "next/image";
-import styles from "./page.module.css";
 import { useEffect, useState } from "react";
-import setAuthToken from "./utils/setAuthToken";
-
-// we are going to be fetching data from our API and displaying it on
-// the page
+import setAuthToken from "../utils/setAuthToken";
+import PageHeader from "@/components/page_header";
 
 export default function Home() {
   // state is what the data is representing in realtime
@@ -24,12 +20,15 @@ export default function Home() {
       });
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No data shown...</p>;
+  // if (isLoading) return <p>Loading...</p>;
+  // if (!data) return <p>No data shown...</p>;
+  //main -> className={styles.main}
+  //<p>{data.message}</p>;
 
   return (
-    <main className={styles.main}>
-      <p>{data.message}</p>
+    <main>
+      <PageHeader />
+      <p>Main Page</p>
     </main>
   );
 }
