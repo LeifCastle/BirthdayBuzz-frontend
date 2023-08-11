@@ -2,7 +2,7 @@
 
 import jwtDecode from "jwt-decode";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import List from "./List";
 import NewEntry from "./NewEntry";
@@ -12,6 +12,7 @@ export default function BuzzList() {
   //const [isLoading, setLoading] = useState(true);
   const router = useRouter();
   const [entryData, setEntryData] = useState([]); //Represents an array of entries in a user's buzzlist
+  const entryAdded = useRef(false); //Used as a dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
   const [content, setContent] = useState(
     <List handleNewEntry={handleNewEntry} entryData={entryData} />
   );
@@ -39,7 +40,7 @@ export default function BuzzList() {
         .then((response) => {
           let userData = jwtDecode(localStorage.getItem("jwtToken"));
           if (userData.email === localStorage.getItem("email")) {
-            console.log(`Response: ${response.data}`);
+            console.log("Response: ", response.data);
             setEntryData(response.data);
             //setLoading(false);
           } else {
@@ -53,7 +54,13 @@ export default function BuzzList() {
     } else {
       router.push("/auth/login");
     }
-  }, [router]);
+    entryAdded.current = false;
+  }, [router, entryAdded.current]);
+
+  //--Update the user's buzzlist whenever entryData changes or
+  useEffect(() => {
+    setContent(<List handleNewEntry={handleNewEntry} entryData={entryData} />);
+  }, [entryData]);
 
   function handleNewEntry() {
     setContent(
@@ -61,6 +68,7 @@ export default function BuzzList() {
         setContent={setContent}
         handleNewEntry={handleNewEntry}
         entryData={entryData}
+        entryAdded={entryAdded}
       />
     );
   }

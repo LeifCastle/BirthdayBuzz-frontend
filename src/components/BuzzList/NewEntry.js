@@ -3,7 +3,12 @@ import { useState, useRef, useEffect } from "react";
 import List from "./List";
 import setAuthToken from "../../utils/setAuthToken";
 
-export default function NewEntry({ setContent, handleNewEntry, entryData }) {
+export default function NewEntry({
+  setContent,
+  handleNewEntry,
+  entryData,
+  entryAdded,
+}) {
   const BASE_URL =
     process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
 
@@ -145,6 +150,7 @@ export default function NewEntry({ setContent, handleNewEntry, entryData }) {
       router.push("/auth/login");
     }
     setContent(<List handleNewEntry={handleNewEntry} entryData={entryData} />);
+    entryAdded.current = true; //Trigger dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
   }
 
   //Handles questionaire HTML rendering as progress timeline changes
