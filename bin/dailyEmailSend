@@ -1,9 +1,6 @@
-// #! /app/bin/node
-
-const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
 async function sendScheduledEmail() {
+  const sgMail = require("@sendgrid/mail");
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const data = {
     from: {
       email: "birthday.buzzx@gmail.com",
