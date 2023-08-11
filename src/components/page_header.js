@@ -29,7 +29,7 @@ export default function PageHeader() {
     } else {
       setDependency(localStorage.getItem("jwtToken"));
     }
-  }, []);
+  }, [handleLogoutButton]);
 
   //If the user is signed in, show Home, My Themes, My Account, and Logout tabs, otherwise only show Home and Login tab
   //Home Tab and "Colorz" text are repeated in both to avoid text jolt from when state values kick in

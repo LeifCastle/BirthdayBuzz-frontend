@@ -7,7 +7,7 @@ export default function NewEntry({
   setContent,
   handleNewEntry,
   entryData,
-  entryAdded,
+  setEntryAdded,
 }) {
   const BASE_URL =
     process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
@@ -29,7 +29,7 @@ export default function NewEntry({
     value: name,
     setValue: setName,
   });
-  const progress = useRef(0); //Which question the user is on
+  const [progress, setProgress] = useState(0); //Which question the user is on
 
   //Determines new entry questions
   let questionBase = [
@@ -96,18 +96,18 @@ export default function NewEntry({
   //----Questionaire Interactivity----\\
   function handleNextQuestion() {
     document.querySelector(".question").value = "";
-    let index = progress.current + 1;
+    let index = progress + 1;
     setQuestion(questionBase[index]);
     value.current = questionBase[index].value; //Set value ref to last stored value if any
-    progress.current += 1;
+    setProgress(progress + 1);
   }
 
   function handlePreviousQuestion() {
     document.querySelector(".question").value = "";
-    let index = progress.current - 1;
+    let index = progress - 1;
     setQuestion(questionBase[index]);
     value.current = questionBase[index].value; //Set value ref to last stored value if any
-    progress.current -= 1;
+    setProgress(progress - 1);
   }
 
   function handleNewValue(e) {
@@ -150,19 +150,19 @@ export default function NewEntry({
       router.push("/auth/login");
     }
     setContent(<List handleNewEntry={handleNewEntry} entryData={entryData} />);
-    entryAdded.current = true; //Trigger dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
+    setEntryAdded(true); //Trigger dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
   }
 
   //Handles questionaire HTML rendering as progress timeline changes
   useEffect(() => {
     //If the user is on the first question hide the back button
-    if (progress.current === 0) {
+    if (progress === 0) {
       document.querySelector("#backButton").setAttribute("hidden", "hidden");
     } else {
       document.querySelector("#backButton").removeAttribute("hidden");
     }
     //If the user goes past the last question...
-    if (progress.current === 7) {
+    if (progress === 7) {
       document.querySelector("#nextButton").setAttribute("hidden", "hidden");
       document.querySelector("#create").removeAttribute("hidden");
       document.querySelector("#questionaire").setAttribute("hidden", "hidden");
@@ -171,7 +171,7 @@ export default function NewEntry({
       document.querySelector("#questionaire").removeAttribute("hidden");
       document.querySelector("#create").setAttribute("hidden", "hidden");
     }
-  }, [progress.current]);
+  }, [progress]); //progress.current
 
   //Possible need to reset some values?
   function cancelEntry() {
