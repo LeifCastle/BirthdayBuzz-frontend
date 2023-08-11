@@ -36,6 +36,9 @@ module.exports = {
         layoutText_Border: "#d1d5db",
         headerNoSelect: "#1B241A",
         headerSelect: "#6E7E65",
+
+        //New App Temp
+        button1: "#6E7E65",
       },
       fontFamily: {
         header: ["var(--font-Catamaran)"],
