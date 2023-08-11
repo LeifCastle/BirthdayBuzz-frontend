@@ -24,7 +24,7 @@ async function sendScheduledEmail() {
   if (response.statusCode === 202) {
     console.log("Email scheduled successfully!");
   } else {
-    console.log(response.body);
+    console.log(response);
   }
 }
 
