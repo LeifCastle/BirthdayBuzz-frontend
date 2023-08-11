@@ -4,15 +4,17 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import ColumnHeaders from "./ColumnHeaders";
-import Entries from "./Entries";
-import handleLogout from "../../utils/handleLogout";
+import List from "./List";
+import NewEntry from "./NewEntry";
 import setAuthToken from "../../utils/setAuthToken";
 
 export default function BuzzList() {
   //const [isLoading, setLoading] = useState(true);
   const router = useRouter();
   const [entryData, setEntryData] = useState([]); //Represents an array of entries in a user's buzzlist
+  const [content, setContent] = useState(
+    <List handleNewEntry={handleNewEntry} entryData={entryData} />
+  );
 
   const BASE_URL =
     process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
@@ -53,17 +55,17 @@ export default function BuzzList() {
     }
   }, [router]);
 
+  function handleNewEntry() {
+    setContent(
+      <NewEntry
+        setContent={setContent}
+        handleNewEntry={handleNewEntry}
+        entryData={entryData}
+      />
+    );
+  }
+
   //if (isLoading) return <p>Loading...</p>;
 
-  return (
-    <div className="bg-layoutBg w-[80%] rounded-md">
-      <ColumnHeaders />
-      <ol>
-        <Entries data={entryData} />
-      </ol>
-      <button className="w-full text-center">
-        <span className="text-2xl mr-2">+</span>Birthday
-      </button>
-    </div>
-  );
+  return <div className="bg-layoutBg w-[80%] rounded-md">{content}</div>;
 }
