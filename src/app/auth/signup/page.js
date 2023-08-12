@@ -12,6 +12,7 @@ const Signup = () => {
   //Signup input field states
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [phone, setphone] = useState(""); 
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
   const [password, setPassword] = useState("");
@@ -29,6 +30,9 @@ const Signup = () => {
   const handleBirthday = (e) => {
     setBirthday(e.target.value);
   };
+  const handlephone = (e) => {
+    setphone(e.target.value);
+  };
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -44,6 +48,7 @@ const Signup = () => {
       firstName,
       lastName,
       birthday,
+      phone,
       email,
       password,
     };
@@ -117,6 +122,14 @@ const Signup = () => {
               placeholder="Birthday"
               value={birthday}
               onChange={handleBirthday}
+              required
+            />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Cellphone Number"
+              value={phone}
+              onChange={handlephone}
               required
             />
             <input
