@@ -3,120 +3,145 @@ import { useState, useRef, useEffect } from "react";
 import List from "./List";
 import setAuthToken from "../../utils/setAuthToken";
 
-//Huge simplify...change inputs to only two and have the second one have CSS to determine its visibility based on the index, then change the type to be a variable in quetsionBase
 export default function NewEntry({
   setContent,
   handleNewEntry,
   entryData,
-  setEntryAdded,
+  entryAdded,
 }) {
-  const BASE_URL =
-    process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
+  //---------------------------------------Variables---------------------------------------\\
 
-  //----Question input's saved values
+  //----------User input saved values
   const [name, setName] = useState();
   const [birthday, setBirthday] = useState();
   const [relation, setRelation] = useState();
   const [message, setMessage] = useState();
-  const [time, setTime] = useState([]);
-  const [delivery, setDelivery] = useState();
-  const [publiclySeen, setPubliclySeen] = useState();
+  const time = useRef([]);
+  const [delivery, setDelivery] = useState("email");
+  const [publiclySeen, setPubliclySeen] = useState("true");
 
-  const value = useRef(); //Used to update the value of the current question's input instantly, question's state value requires a rerender to show up
+  //----------Current question values from questionBase
   const [question, setQuestion] = useState({
     id: 0,
+    inputType: "text",
     title: "What's their name?",
     placeholder: "John",
     value: name,
     type: "name",
     setValue: setName,
+    change: changeText,
   });
 
-  const progress = useRef(0); //Which question the user is on
-  const [error, setError] = useState(); //Questionaire error display
-  const keyDown = useRef(); //What key the user last pressed
+  //----------Update the value of the current question's input instantly, question's state value requires a rerender to show up
+  const value = useRef();
 
+  //----------Which question the user is on
+  const progress = useRef(0);
 
-  //Determines new entry questions
+  //Error message to display
+  const [error, setError] = useState();
+
+  //----------Gives questionaire inputs predefined values and temporarily stores user input history
   let questionBase = [
     {
       id: 0,
+      inputType: "text",
       title: "What's their name?",
       placeholder: "John",
       value: name,
       type: "name",
       setValue: setName,
+      change: changeText,
     },
     {
       id: 1,
+      inputType: "date",
       title: "What's their birthday?",
       placeholder: "01/01/2001",
       value: birthday,
       type: "birthday",
       setValue: setBirthday,
+      change: changeText,
     },
     {
       id: 2,
+      inputType: "text",
       title: "What is this person's relation to you?",
       placeholder: "Friend",
       value: relation,
       type: "relation",
       setValue: setRelation,
+      change: changeText,
     },
     {
       id: 3,
+      inputType: "text",
       title: "What would you like the reminder text to be?",
       placeholder: "It's John's birday today!",
       value: message,
       type: "message",
       setValue: setMessage,
+      change: changeText,
     },
     {
       id: 4,
+      inputType: "checkbox",
       title: "When do you want to be reminded?",
       placeholder: "Day Of",
-      value: time,
+      name: "Group1",
+      staticValue1: "Day Of",
+      staticValue2: "Day Before",
+      value: time.current,
       type: "time",
-      setValue: setTime,
+      setValue: changeTime,
+      change: changeTime,
     },
     {
       id: 5,
+      inputType: "radio",
       title: "Would you like an email or text reminder?",
       placeholder: "text",
       value: delivery,
       type: "delivery",
-      one: "email",
-      two: "text",
+      name: "Group2",
+      staticValue1: "email",
+      staticValue2: "text",
       change: changeReminder,
       setValue: setDelivery,
     },
     {
       id: 6,
+      inputType: "radio",
       title:
         "Do you want other users to be able to see this person on your Buzz List?",
       placeholder: "True",
       value: publiclySeen,
       type: "publicalySeen",
-      one: "True",
-      two: "False",
+      name: "Group3",
+      staticValue1: "True",
+      staticValue2: "False",
       change: changePublic,
       setValue: setPubliclySeen,
     },
     //Empty to prevent input from trying to grab non-existent 7'th question
     {
       id: 7,
-      title: "",
+      title: name,
       placeholder: "",
       value: "",
       setValue: "",
     },
   ];
 
-  //----Questionaire Interactivity----\\
+  const BASE_URL =
+    process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
+
+  //-----------------------------Questionaire Button Interactivity-----------------------------\\
+
+  //----------Next question
   function handleNextQuestion() {
     let index = progress.current + 1; //The index of the current question in questionBase
-    if (document.querySelector(".question").value || time.length > 0) {
-      checkInputType(index);
+    if (document.querySelector(".question").value || time.current.length > 0) {
       document.querySelector(".question").value = "";
       setQuestion(questionBase[index]);
       value.current = questionBase[index].value; //Set value ref to last stored value if any
@@ -129,91 +154,73 @@ export default function NewEntry({
     }
   }
 
-  function checkInputType(index) {
-    if (index === 4) {
-      document.querySelector(".qType2").removeAttribute("hidden");
-      document.querySelector(".qType1").setAttribute("hidden", "hidden");
-      document.querySelector(".qType3").setAttribute("hidden", "hidden");
-    } else if (index > 4) {
-      document.querySelector(".qType3").removeAttribute("hidden");
-      document.querySelector(".qType1").setAttribute("hidden", "hidden");
-      document.querySelector(".qType2").setAttribute("hidden", "hidden");
-    } else {
-      document.querySelector(".qType1").removeAttribute("hidden");
-      document.querySelector(".qType2").setAttribute("hidden", "hidden");
-      document.querySelector(".qType3").setAttribute("hidden", "hidden");
-    }
-
-  }
-
+  //----------Previous question
   function handlePreviousQuestion() {
     document.querySelector(".question").value = "";
-    let index = progress - 1;
+    let index = progress.current - 1;
     setQuestion(questionBase[index]);
     value.current = questionBase[index].value; //Set value ref to last stored value if any
     progress.current -= 1;
-    checkInputType(index);
-
   }
 
-  function handleNewValue(e) {
+  //----------Cancel entry and return to Buzz List
+  function cancelEntry() {
+    setContent(<List handleNewEntry={handleNewEntry} entryData={entryData} />);
+  }
+
+  //-------------------------------------Saving User Input-------------------------------------\\
+
+  //----------Saves user inputs for type "text/date" in question base
+  function changeText(e) {
     let index = e.target.id;
     let currentQuestion = questionBase[index];
-    //If the question is of the type birthday set various input controls
-    if (
-      index == 1 &&
-      (e.target.value.length === 2 || e.target.value.length === 5)
-    ) {
-      if (keyDown.current != "Backspace") {
-        currentQuestion.setValue(e.target.value + "/"); //Sets the value in input's state record
-        value.current = e.target.value + "/"; //Actually sets the value on the input equal to what the user types
-      } else {
-        currentQuestion.setValue(e.target.value.slice(0, -1)); //Sets the value in input's state record
-        value.current = e.target.value.slice(0, -1); //Actually sets the value on the input equal to what the user types
-      }
-    } else if (e.target.value.length < 9) {
-      currentQuestion.setValue(e.target.value); //Sets the value in input's state record
-      value.current = e.target.value; //Actually sets the value on the input equal to what the user types
-    }
+    currentQuestion.setValue(e.target.value);
   }
 
-  function handleNewSelection(e) {
+  //----------Saves user inputs from "time" input in question base
+  function changeTime(e) {
     if (e.target.checked) {
-      setTime([...time, e.target.value]);
+      //If the user checks a box
+      time.current = [...time.current, e.target.getAttribute("staticvalue")];
     } else {
-      let real = time.filter((x) => {
-        return x !== e.target.value;
+      //If the user unchecks a box
+      let real = time.current.filter((x) => {
+        return x !== e.target.getAttribute("staticvalue");
       });
-      setTime([...real]);
+      time.current = [...real];
     }
   }
 
+  //----------Saves user inputs from "reminderTimeFrame" input in question base
   function changeReminder(e) {
-    setDelivery(e.target.value);
+    setDelivery(e.target.getAttribute("staticvalue"));
   }
 
+  //----------Saves user inputs from "publiclySeen" input in question base
   function changePublic(e) {
-    setPubliclySeen(e.target.value);
+    setPubliclySeen(e.target.getAttribute("staticvalue"));
   }
 
-  //----Create new entry in database----\\
+  //---------------------------------Adding new entry to database---------------------------------\\
   function createEntry() {
+    let birthdayArr = birthday.split("").reverse();
+    let formattedBirthday = birthdayArr.join("").replaceAll("-", "/");
     const newEntry = {
       user: {
         email: localStorage.getItem("email"),
       },
       newPerson: {
         name: name,
-        birthday: birthday,
+        birthday: formattedBirthday,
         relation: relation,
         message: message,
-        time: time,
+        time: time.current,
         delivery: delivery,
         publiclySeen: publiclySeen,
       },
     };
     console.log("New Entry: ", newEntry);
-    setAuthToken(localStorage.getItem("jwtToken")); //Is this auth stuff neccessary and if so is it all we need to do?
+    setAuthToken(localStorage.getItem("jwtToken")); //Is this auth stuff neccessary buzzlist component would kick user back to login itself right?
     if (localStorage.getItem("jwtToken")) {
       axios
         .post(`${BASE_URL}/buzzlist/new`, newEntry)
@@ -229,33 +236,38 @@ export default function NewEntry({
       router.push("/auth/login");
     }
     setContent(<List handleNewEntry={handleNewEntry} entryData={entryData} />);
-    setEntryAdded(true); //Trigger dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
+    entryAdded.current = true; //Trigger dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
   }
 
-  //Handles questionaire HTML rendering as progress timeline changes
+  //---------------------------------------HTML Visibility----------------------------------------\\
   useEffect(() => {
-    //If the user is on the first question hide the back button
-    if (progress === 0) {
+    //----------If the user is on the first question hide the back button
+    if (progress.current === 0) {
       document.querySelector("#backButton").setAttribute("hidden", "hidden");
     } else {
       document.querySelector("#backButton").removeAttribute("hidden");
     }
-    //If the user goes past the last question...
-    if (progress === 7) {
-      document.querySelector("#nextButton").setAttribute("hidden", "hidden");
+
+    //----------If the user is on question four or later show the second input
+    if (progress.current > 3 && progress.current < 7) {
+      document.querySelector("#input2").removeAttribute("hidden");
+    } else {
+      document.querySelector("#input2").setAttribute("hidden", "hidden");
+    }
+
+    //----------If the user goes past the last question...
+    if (progress.current >= 7) {
       document.querySelector("#create").removeAttribute("hidden");
-      document.querySelector("#questionaire").setAttribute("hidden", "hidden");
+      document.querySelector("#previewPerson").removeAttribute("hidden");
+      document.querySelector("#nextButton").setAttribute("hidden", "hidden");
+      document.querySelector(".question").setAttribute("hidden", "hidden");
     } else {
       document.querySelector("#nextButton").removeAttribute("hidden");
-      document.querySelector("#questionaire").removeAttribute("hidden");
+      document.querySelector(".question").removeAttribute("hidden");
       document.querySelector("#create").setAttribute("hidden", "hidden");
+      document.querySelector("#previewPerson").setAttribute("hidden", "hidden");
     }
-  }, [progress]); //progress.current
-
-  //Possible need to reset some values?
-  function cancelEntry() {
-    setContent(<List handleNewEntry={handleNewEntry} entryData={entryData} />);
-  }
+  }, [progress.current]);
 
   return (
     <div id="flexError" className="flex-col h-[300px] items-center">
@@ -270,54 +282,62 @@ export default function NewEntry({
         <div className="flexError basis-2/5 justify-end">
           <button
             id="backButton"
-            className="bg-button1 rounded-md mr-2 pl-4 pr-4"
+            className="bg-button1 rounded-md mr-2 pl-4 pr-4 h-[40px]"
             onClick={handlePreviousQuestion}
           >
             Back
           </button>
         </div>
+        <div className="w-[200px]" id="previewPerson" hidden="hidden">
+          <ul>
+            <li>
+              <span>Birthday: </span>
+              {birthday}
+            </li>
+            <li>
+              <span>Relation: </span>
+              {relation}
+            </li>
+            <li className="whitespace-nowrap">
+              <span>Message: </span>
+              {message}
+            </li>
+            <li className="whitespace-nowrap">
+              <span>Time: </span>
+              {time.current}
+            </li>
+            <li className="whitespace-nowrap">
+              <span>Delivery: </span>
+              {delivery}
+            </li>
+            <li className="whitespace-nowrap">
+              <span>Publicly Seen: </span>
+              {publiclySeen}
+            </li>
+          </ul>
+        </div>
         <div className="flexError basis-1/5 justify-center" id="questionaire">
           <input
             id={question.id}
-            type="text"
-            className="qType1 question placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2"
+            className="question placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2"
             placeholder={question.placeholder}
+            type={question.inputType}
+            name={question.name}
+            staticvalue={question.staticValue1}
             value={value.current}
-            onChange={handleNewValue}
-            onKeyDown={(e) => (keyDown.current = e.key)}
+            onChange={question.change}
+            max="9999-12-31"
           />
-          <div className="qType2" hidden="hidden">
-            <input
-              type="checkbox"
-              name="group1"
-              value="Day Of"
-              onChange={handleNewSelection}
-            />
-            <label for="my-radio-1">Day Of</label>
-            <input
-              type="checkbox"
-              name="group1"
-              value="Day Before"
-              onChange={handleNewSelection}
-            />
-            <label for="my-radio-2">Day Before</label>
-          </div>
-          <div className="qType3" hidden="hidden">
-            <input
-              type="radio"
-              name="group2"
-              value={question.one}
-              onChange={question.change}
-            />
-            <label for="my-radio-1">{question.one}</label>
-            <input
-              type="radio"
-              name="group2"
-              value={question.two}
-              onChange={question.change}
-            />
-            <label for="my-radio-2">{question.two}</label>
-          </div>
+          <label for="my-radio-1">{question.staticValue1}</label>
+          <input
+            id="input2"
+            hidden="hidden"
+            type={question.inputType}
+            name={question.name}
+            staticvalue={question.staticValue2}
+            onChange={question.change}
+          />
+          <label for="my-radio-1">{question.staticValue2}</label>
         </div>
         <div className="flexError basis-2/5 justify-start">
           <button
