@@ -1,16 +1,14 @@
+import { useState, useRef } from "react";
+
 import ColumnHeaders from "./ColumnHeaders";
 import Entry from "./Entry";
 
 export default function List({ handleNewEntry, entryData }) {
   console.log("Entry data: ", entryData);
-  let entries = [];
-  if (entryData.length) {
-    entryData.forEach((entry) => {
-      entries.push(<Entry key={entry.name} data={entry} />); //Update to an id of some sort for filterability
-    });
-  } else {
-    entries.push(<p>No users in your buzzlist!</p>);
-  }
+
+  const entries = entryData.map((entry) => {
+    return <Entry key={entry._id + "Z"} data={entry} />; //Update to an id of some sort for filterability
+  });
 
   return (
     <>
