@@ -5,7 +5,7 @@ export default function ColumnHeaders() {
       <p className="basis-1/5">Birthday</p>
       <p className="basis-1/5">Relation</p>
       <p className="basis-1/5">Timeframe</p>
-      <p className="basis-1/5">DeliverySystem</p>
+      <p className="basis-1/5">Message</p>
     </div>
   );
 }
