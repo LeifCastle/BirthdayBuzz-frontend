@@ -19,6 +19,7 @@ a {
   text-decoration: none;
 }
 
-#flexError {
+#flexError,
+.flexError {
   display: flex;
 }
