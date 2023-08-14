@@ -8,20 +8,20 @@ import BuzzList from "@/components/BuzzList/BuzzList";
 
 export default function Home() {
   const [data, setData] = useState(null);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}`)
-      .then((res) => res.json())
-      .then((data) => {
-        // data is an object
-        setData("true");
-        setLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // data is an object
+  //       setData("true");
+  //       setLoading(false);
+  //     });
+  // }, []);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No data shown...</p>;
+  // if (isLoading) return <p>Loading...</p>;
+  // if (!data) return <p>No data shown...</p>;
 
   return (
     <>
