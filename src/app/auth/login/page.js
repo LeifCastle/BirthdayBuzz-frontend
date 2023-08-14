@@ -60,11 +60,19 @@ export default function Login() {
       <div className="flexError flex-col items-center bg-slate-600">
         <p>{error}</p>
         <div>
-          <a href="/auth/login" type="button" className="bg-slate-500 mt-3">
+          <a
+            href="/auth/login"
+            type="button"
+            className="bg-button1 rounded-md mt-4 pl-4 pr-4 h-[25px]"
+          >
             Login
           </a>
           <span> </span>
-          <a href="/auth/signup" type="button" className="bg-slate-500 mt-3">
+          <a
+            href="/auth/signup"
+            type="button"
+            className="bg-button1 rounded-md mb-4 pl-4 pr-4 h-[25px]"
+          >
             Signup
           </a>
         </div>
@@ -82,14 +90,13 @@ export default function Login() {
           onSubmit={handleSubmit}
         >
           <h1 className="text-red">Login</h1>
-          <p className="text-muted">Sign In to your account</p>
           <div
             id="flexError"
             className="flexError text-black flex-col gap-2 items-center"
           >
             <input
               type="text"
-              className="form-control"
+              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
               placeholder="Email"
               value={email}
               onChange={handleEmail}
@@ -97,27 +104,28 @@ export default function Login() {
             />
             <input
               type="password"
-              className="form-control"
+              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
               placeholder="Password"
               alue={password}
               onChange={handlePassword}
               required
             />
           </div>
-          <div className="row">
-            <button type="submit" className="bg-slate-500 px-4 rounded-md mt-2">
+          <div className="flex items-center mt-4 mb-4">
+            <button
+              type="submit"
+              className="bg-button1 rounded-md pl-4 pr-4 h-[25px]"
+            >
               Login
             </button>
+            <a
+              href="/auth/signup"
+              type="button"
+              className="bg-button1 rounded-md ml-4 pl-4 pr-4 h-[25px]"
+            >
+              Signup
+            </a>
           </div>
-          <br />
-          <h2>Don&apos;t have an account? Sign Up Now!</h2>
-          <a
-            href="/auth/signup"
-            type="button"
-            className="bg-slate-500 mt-3 pl-1 pr-1 rounded-md mb-2"
-          >
-            Register Now!
-          </a>
         </form>
       </div>
     </>
