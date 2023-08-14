@@ -150,15 +150,21 @@ export default function NewEntry({
 
   //---------------------------------Adding new entry to database---------------------------------\\
   function createEntry() {
-    let birthdayArr = birthday.split("").reverse();
-    let formattedBirthday = birthdayArr.join("").replaceAll("-", "/");
+    console.log("UnFormatted: ", birthday);
+    let birthdayArr = birthday.split("-");
+    let formattedBirthday = birthdayArr.reverse();
+    const saved = formattedBirthday[0];
+    formattedBirthday[0] = formattedBirthday[1];
+    formattedBirthday[1] = saved;
+    const result = formattedBirthday.join("/");
+    console.log("Formatted: ", result);
     const newEntry = {
       user: {
         email: localStorage.getItem("email"),
       },
       newPerson: {
         name: name,
-        birthday: formattedBirthday,
+        birthday: result,
         relation: relation,
         message: message,
         reminderTimeFrame: time.current,
