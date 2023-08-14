@@ -11,7 +11,7 @@ export default function Home() {
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/`)
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}`)
       .then((res) => res.json())
       .then((data) => {
         // data is an object
@@ -22,7 +22,6 @@ export default function Home() {
 
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No data shown...</p>;
-  <p>{data.message}</p>;
 
   return (
     <>
