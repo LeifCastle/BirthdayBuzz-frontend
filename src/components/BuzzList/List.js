@@ -5,10 +5,13 @@ import Entry from "./Entry";
 
 export default function List({ handleNewEntry, entryData }) {
   console.log("Entry data: ", entryData);
+  let entries = [];
 
-  const entries = entryData.map((entry) => {
-    return <Entry key={entry._id + "Z"} data={entry} />; //Update to an id of some sort for filterability
-  });
+  if (entryData) {
+    entries = entryData.map((entry) => {
+      return <Entry key={entry._id + "Z"} data={entry} />; //Update to an id of some sort for filterability
+    });
+  }
 
   return (
     <>
