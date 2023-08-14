@@ -1,8 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import PageHeader from "../../../components/page_header";
+import { sendStatusCode } from "next/dist/server/api-utils";
+//const sendScheduledEmail = require("bin/dailyEmailSend");
 
 const Signup = () => {
   const router = useRouter();
@@ -12,10 +14,13 @@ const Signup = () => {
   //Signup input field states
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [phone, setphone] = useState(""); 
+  const [phone, setphone] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
   const [password, setPassword] = useState("");
+
+  const [codeH, setCodeH] = useState();
+  const code = useRef();
 
   const BASE_URL =
     process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
@@ -40,8 +45,52 @@ const Signup = () => {
     setPassword(e.target.value);
   };
 
+  async function emailVerification(email) {
+    axios
+      .post(`${BASE_URL}/auth/verify`, { email: email })
+      .then((response) => {
+        console.log("Message: ", response.data.message);
+        doNext(email);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  }
+
+  function handleCodeVerification(email, code) {
+    console.log(`Sending ${code} from ${email}`);
+    axios
+      .get(`${BASE_URL}/auth/checkVerify/${email}/${code}`)
+      .then((response) => {
+        console.log("Message: ", response.data.message);
+        if (response.data.result === true) {
+          console.log(`Fuck Yeah Buddy`);
+        } else {
+          console.log("WHAT THE FUCKKKKKKKK");
+        }
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  }
+
+  function doNext(email) {
+    setCodeH(
+      <div>
+        <p>Enter you're verification code</p>
+        <input
+          type="text"
+          onChange={(e) => (code.current = e.target.value)}
+        ></input>
+        <button onClick={() => handleCodeVerification(email, code.current)}>
+          Submit Code
+        </button>
+      </div>
+    );
+  }
+
   //----Form submit event handler
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault(); // prevents html form default refresh
     //Gather new user data
     const newUser = {
@@ -52,19 +101,26 @@ const Signup = () => {
       email,
       password,
     };
-    //--Post to server new user
-    axios
-      .post(`${BASE_URL}/auth/signup`, newUser) //process.env.NEXT_PUBLIC_SERVER_URL
-      .then((response) => {
-        setRedirect(true);
+    await emailVerification(newUser.email)
+      .then((result) => {
+        console.log(result);
       })
       .catch((error) => {
-        if (error.response.data.message === "Email already exists") {
-          console.log("===> Error in Signup", error.response.data.message);
-          setError(true);
-        }
+        console.log(error);
       });
-  };
+    //--Post to server new user
+    // axios
+    //   .post(`${BASE_URL}/auth/signup`, newUser) //process.env.NEXT_PUBLIC_SERVER_URL
+    //   .then((response) => {
+    //     setRedirect(true);
+    //   })
+    //   .catch((error) => {
+    //     if (error.response.data.message === "Email already exists") {
+    //       console.log("===> Error in Signup", error.response.data.message);
+    //       setError(true);
+    //     }
+    //   });
+  }
 
   //--If user is succesfully created redirect user to login
   if (redirect) {
@@ -92,6 +148,7 @@ const Signup = () => {
   return (
     <>
       <PageHeader />
+      {codeH}
       <div
         id="flexError"
         className="flex justify-center text-white bg-slate-600"
