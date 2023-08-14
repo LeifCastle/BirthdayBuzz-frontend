@@ -161,7 +161,7 @@ export default function NewEntry({
         birthday: formattedBirthday,
         relation: relation,
         message: message,
-        time: time.current,
+        reminderTimeFrame: time.current,
       },
     };
     console.log("New Entry: ", newEntry);

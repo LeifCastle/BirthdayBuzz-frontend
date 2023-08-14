@@ -30,8 +30,7 @@ export default function Home() {
   return (
     <>
       <PageHeader />
-      <main id="flexError" className="flex-col items-center">
-        <p>Main Page</p>
+      <main id="flexError" className="flex-col items-center pt-4">
         <BuzzList />
       </main>
     </>

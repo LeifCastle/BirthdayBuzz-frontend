@@ -37,7 +37,7 @@ export default function PageHeader() {
     if (localStorage.getItem("jwtToken")) {
       setPageTabs(
         <>
-          <h1 className="pl-20 pr-10">Colorz</h1>
+          <h1 className="pl-20 pr-10">Birthday Buzz</h1>
           <Link href="/" className="text-base pt-1">
             Home
           </Link>
