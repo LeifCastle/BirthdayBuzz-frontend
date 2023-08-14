@@ -55,7 +55,7 @@ export default function BuzzList() {
       router.push("/auth/login");
     }
     entryAdded.current = false;
-  }, [router, entryAdded.current]); //entryAdded.current
+  }, [router]); //entryAdded.current
 
   //--Update the user's buzzlist whenever entryData changes or
   useEffect(() => {
