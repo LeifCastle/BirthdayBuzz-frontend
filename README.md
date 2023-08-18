@@ -4,7 +4,7 @@
 
 # **About**
 
-Never forget another birthday! Birthday Buzz is a MERN stack application that sends you email reminders when it's someone's birthday. Simply add your friends and family to your "buzz list" and we'll automatically send you a customized reminder when they're brithday is coming up or on the day of.
+Never forget another birthday! Birthday Buzz is a MERN stack application that sends you email reminders when it's someone's birthday. Simply add your friends and family to your "buzz list" and we'll automatically send you a customized reminder when they're birthday is coming up or on the day of.
 
 ### Features
 
@@ -16,20 +16,20 @@ Never forget another birthday! Birthday Buzz is a MERN stack application that se
 
 # **Built With**
 
-![Javascript](https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white)
-![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
-![NODE.JS](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind.css-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
-![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
-![Twilio](https://img.shields.io/badge/Twilio-F22F46?style=for-the-badge&logo=twilio&logoColor=white)
+<span style="margin-inline:4px">![Javascript](https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white)</span>
+<span style="margin-inline:4px">![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)</span>
+<span style="margin-inline:4px">![NODE.JS](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)</span>
+<span style="margin-inline:4px">![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)</span>
+<span style="margin-inline:4px">![TailwindCSS](https://img.shields.io/badge/Tailwind.css-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)</span>
+<span style="margin-inline:4px">![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)</span>
+<span style="margin-inline:4px">![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)</span>
+<span style="margin-inline:4px">![Twilio](https://img.shields.io/badge/Twilio-F22F46?style=for-the-badge&logo=twilio&logoColor=white)</span>
 
 <br />
 
 # Deployment
 
-- Frontend deployed online at [BirthdayBuzz](www.birthdaybuz.net)
+- Frontend deployed online at [BirthdayBuzz](http://www.birthdaybuz.net)
 - Backend deployed on [Heroku](https://birthday-buzz-backend-85f63d7d1452.herokuapp.com/)
 - Frontend Github Repo [Github](https://github.com/LeifCastle/BirthdayBuzz-frontend)
 - Backend Github Repo [Github](https://github.com/LeifCastle/BirthdayBuzz-backend)
@@ -127,11 +127,9 @@ npm run dev
 
 <br />
 
-# Wireframes and Entitey Relationship Diagram
+# Wireframing and Entity Relationship Diagram
 
-<img src="./public/images/BirthdayBuzz_HomePage.png" alt="HomePage" width="380" height="275"/>
-<img src="./public/images/BirthdayBuzz_FindPage.png" alt="HomePage" width="380" height="275"/>
-<img src="./public/images/BirthdayBuzz_Modeling.png" alt="HomePage" width="380" height="275"/>
+<img src="./public/images/BirthdayBuzz_Design&ERD.png" style="border-radius:5px" alt="Design & ERD" width="800" height="375"/>
 
 <br />
 
