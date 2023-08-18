@@ -14,12 +14,12 @@ export default function Home() {
     setAuthToken(localStorage.getItem("jwtToken"));
     if (localStorage.getItem("jwtToken")) {
       setHTML(
-        <>
+        <div className="bg-[url('/static/images/App_Background.png')] w-[100vw] h-[100vh] bg-cover">
           <PageHeader />
           <main id="flexError" className="flex-col items-center pt-4">
             <BuzzList />
           </main>
-        </>
+        </div>
       );
     } else {
       router.push("/auth/login");
