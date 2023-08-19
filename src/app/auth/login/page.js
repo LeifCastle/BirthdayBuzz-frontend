@@ -40,12 +40,21 @@ export default function Login() {
         localStorage.setItem("email", response.data.userData.email);
         localStorage.setItem("expiration", response.data.userData.exp);
         setAuthToken(response.data.token);
-        let decoded = jwtDecode(response.data.token);
+        let decoded = jwtDecode(response.data.token); //Remove this?
         setRedirect(true);
       })
       .catch((error) => {
-        console.log("E:", error);
-        setError(error.response.data.message);
+        setPassword("");
+        setError(
+          <div className="flexError flex items-center justify-center bg-authFormBg h-[50px] w-[400px] mt-4 rounded-lg bg-opacity-80">
+            <p className="text-red-800 text-[1.2rem]">
+              {error.response.data.message}
+            </p>
+          </div>
+        );
+        setTimeout(() => {
+          setError();
+        }, 4000);
       });
   };
 
@@ -54,39 +63,13 @@ export default function Login() {
     router.push("/");
   }
 
-  //----If user does not succesfully log in display error
-  if (error != false) {
-    return (
-      <div className="flexError flex-col items-center bg-slate-600">
-        <p>{error}</p>
-        <div>
-          <a
-            href="/auth/login"
-            type="button"
-            className="bg-button1 rounded-md mt-4 pl-4 pr-4 h-[25px]"
-          >
-            Login
-          </a>
-          <span> </span>
-          <a
-            href="/auth/signup"
-            type="button"
-            className="bg-button1 rounded-md mb-4 pl-4 pr-4 h-[25px]"
-          >
-            Signup
-          </a>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-[url('/static/images/Auth_Background.png')] w-[100vw] h-[100vh] bg-cover">
       <PageHeader />
-      <div className="flex justify-center text-white">
+      <div className="flexError flex-col w-[100vw] items-center mt-[15vh] text-white">
         <form
           id="flexError"
-          className="flexError flex-col items-center bg-authFormBg h-[210px] w-[400px] mt-[15vh] rounded-lg bg-opacity-80"
+          className="flexError flex-col items-center bg-authFormBg h-[210px] w-[400px] rounded-lg bg-opacity-80"
           onSubmit={handleSubmit}
         >
           <div className="flexError flex items-center justify-center mb-7 w-full bg-authFormBg h-10 rounded-tl-lg rounded rounded-tr-lg bg-opacity-90">
@@ -98,7 +81,7 @@ export default function Login() {
           >
             <input
               type="text"
-              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
+              className="input placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
               placeholder="Email"
               value={email}
               onChange={handleEmail}
@@ -106,9 +89,9 @@ export default function Login() {
             />
             <input
               type="password"
-              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
+              className="input placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
               placeholder="Password"
-              alue={password}
+              value={password}
               onChange={handlePassword}
               required
             />
@@ -122,6 +105,7 @@ export default function Login() {
             </button>
           </div>
         </form>
+        <div>{error}</div>
       </div>
     </div>
   );
