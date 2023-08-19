@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="./public/images/BirthdayBuzz_Logo.png" alt="HomePage" style="border-radius: 0.4rem" width="600" height="90"/>
+    <img src="./public/static/images/BirthdayBuzz_Logo.png" alt="HomePage" style="border-radius: 0.4rem" width="600" height="90"/>
 </div>
 
 # **About**
@@ -129,7 +129,7 @@ npm run dev
 
 # Wireframing and Entity Relationship Diagram
 
-<img src="./public/images/BirthdayBuzz_Design&ERD.png" style="border-radius:5px" alt="Design & ERD" width="800" height="375"/>
+<img src="./public/static/images/BirthdayBuzz_Design&ERD.png" style="border-radius:5px" alt="Design & ERD" width="800" height="375"/>
 
 <br />
 

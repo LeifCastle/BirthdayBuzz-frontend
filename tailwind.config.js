@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        headerH: "7vh",
+        headerH: "10vh",
         sceneW: "60vw",
         sceneH: "60vh",
         layout_themeW: "15vw",
@@ -22,8 +22,8 @@ module.exports = {
       },
       colors: {
         //#4E4B3C gold color alt
-        layoutBg: "#2A2A2A",
-        pageHBg: "#1B1B1B",
+        authFormBg: "#2B3434",
+        pageHBg: "#2B3434", //#1B1B1B
 
         //Layout-header/footer border
         lhfBorderNoSelect: "#484C47",

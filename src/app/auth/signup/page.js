@@ -11,7 +11,6 @@ const Signup = () => {
   //Signup input field states
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [phone, setphone] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
   const [password, setPassword] = useState("");
@@ -59,9 +58,6 @@ const Signup = () => {
   };
   const handleBirthday = (e) => {
     setBirthday(e.target.value);
-  };
-  const handlephone = (e) => {
-    setphone(e.target.value);
   };
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -155,7 +151,6 @@ const Signup = () => {
       firstName,
       lastName,
       birthday,
-      phone,
       email,
       password,
     };
@@ -175,16 +170,18 @@ const Signup = () => {
   }
 
   return (
-    <>
+    <div className="bg-[url('/static/images/Auth_Background.png')] w-[100vw] h-[100vh] bg-cover">
       <PageHeader />
-      <div
-        id="flexError"
-        className="flex justify-center text-white bg-slate-600"
-      >
+      <div id="flexError" className="flex justify-center text-white">
         {verificationHTML}
-        <form id="signupForm" onSubmit={handleSignup}>
-          <h1 className="text-center">Sign Up</h1>
-          <p className="text-muted">Create an account below to get started</p>
+        <form
+          id="signupForm"
+          className="flexError flex-col items-center bg-authFormBg h-[325px] w-[400px] mt-[10vh] rounded-lg bg-opacity-80"
+          onSubmit={handleSignup}
+        >
+          <div className="flexError flex items-center justify-center mb-7 w-full bg-authFormBg h-10 rounded-tl-lg rounded rounded-tr-lg bg-opacity-90">
+            <h1 className="text-[1.75rem]">Creating An Account...</h1>
+          </div>
           <div id="flexError" className="inputs text-black flex-col gap-2">
             <input
               type="text"
@@ -211,14 +208,6 @@ const Signup = () => {
               required
             />
             <input
-              type="text"
-              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
-              placeholder="Cellphone Number"
-              value={phone}
-              onChange={handlephone}
-              required
-            />
-            <input
               type="email"
               className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
               placeholder="Email"
@@ -235,7 +224,7 @@ const Signup = () => {
               required
             />
           </div>
-          <div className="flex justify-center mt-2 mb-2">
+          <div className="flex justify-center mt-4">
             <button
               type="submit"
               className="bg-button1 rounded-md mr-2 pl-4 pr-4 h-[40px]"
@@ -245,7 +234,7 @@ const Signup = () => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

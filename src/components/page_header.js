@@ -17,8 +17,7 @@ export default function PageHeader() {
   //----Logs the current user out and redirects them to the home page
   function handleLogoutButton() {
     handleLogout();
-    router.push("/");
-    window.location.reload(); //Neccesary to refresh pageHeader tabs when the user logs out from the home page not sure why since logout function removes the jwtToken from local storage so it should make no difference what route you're in
+    router.push("/auth/login");
   }
 
   //The purpose of this useEffect is to allow localStorage (which doesn't exist until the window is loaded)
@@ -31,7 +30,7 @@ export default function PageHeader() {
     }
   }, [handleLogoutButton]);
 
-  //If the user is signed in, show Home, My Themes, My Account, and Logout tabs, otherwise only show Home and Login tab
+  //If the user is signed in, show Home, My Themes, My Account, and Logout tabs, otherwise only show Login and Signup tab
   //Home Tab and "Colorz" text are repeated in both to avoid text jolt from when state values kick in
   useEffect(() => {
     if (localStorage.getItem("jwtToken")) {
@@ -60,8 +59,8 @@ export default function PageHeader() {
       setPageTabs(
         <>
           <h1 className="pl-20 pr-10">Birthday Buzz</h1>
-          <Link href="/" className="text-base pt-1">
-            Home
+          <Link href="/auth/signup" className="text-base pt-1">
+            Signup
           </Link>
           <span className="ml-3 mr-3 text-base text-bold text-gray-400 pt-1">
             |
@@ -77,13 +76,13 @@ export default function PageHeader() {
 
   return (
     <div
-      className={`flex items-center justify-center h-headerH pb-1 border-b-[1px] border-[#4C4C4C] bg-pageHBg text-white text-4xl font-header`}
+      className={`flex items-center justify-center h-headerH pb-1 bg-gradient-to-b from-pageHBg from-70% text-white text-4xl font-header`}
     >
-      <div className="basis-2/5 flex justify-left ml-VH5 items-center">
+      <div className="basis-2/5 flex justify-left mb-4 ml-VH5 items-center">
         {pageTabs}
       </div>
       <div className="basis-3/5">
-        <div className="text-base text-end mr-10">{logout}</div>
+        <div className="mb-4 text-base text-end mr-10">{logout}</div>
       </div>
     </div>
   );

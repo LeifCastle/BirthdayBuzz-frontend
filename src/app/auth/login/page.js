@@ -81,15 +81,17 @@ export default function Login() {
   }
 
   return (
-    <>
+    <div className="bg-[url('/static/images/Auth_Background.png')] w-[100vw] h-[100vh] bg-cover">
       <PageHeader />
-      <div className="flex justify-center text-white bg-slate-600">
+      <div className="flex justify-center text-white">
         <form
           id="flexError"
-          className="flexError flex-col items-center bg-slate-600"
+          className="flexError flex-col items-center bg-authFormBg h-[210px] w-[400px] mt-[15vh] rounded-lg bg-opacity-80"
           onSubmit={handleSubmit}
         >
-          <h1 className="text-red">Login</h1>
+          <div className="flexError flex items-center justify-center mb-7 w-full bg-authFormBg h-10 rounded-tl-lg rounded rounded-tr-lg bg-opacity-90">
+            <h1 className="text-[1.75rem]">Logging In...</h1>
+          </div>
           <div
             id="flexError"
             className="flexError text-black flex-col gap-2 items-center"
@@ -114,20 +116,13 @@ export default function Login() {
           <div className="flex items-center mt-4 mb-4">
             <button
               type="submit"
-              className="bg-button1 rounded-md pl-4 pr-4 h-[25px]"
+              className="bg-button1 rounded-md mr-2 pl-4 pr-4 h-[40px]"
             >
               Login
             </button>
-            <a
-              href="/auth/signup"
-              type="button"
-              className="bg-button1 rounded-md ml-4 pl-4 pr-4 h-[25px]"
-            >
-              Signup
-            </a>
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
