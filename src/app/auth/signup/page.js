@@ -23,11 +23,16 @@ const Signup = () => {
     process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
 
   const verifHTML = (
-    <div className="flexError flex-col items-center bg-authFormBg h-[150px] w-[400px] mt-[10vh] rounded-lg bg-opacity-80">
+    <div className="flexError flex-col items-center bg-authFormBg h-[160px] w-[400px] mt-[10vh] rounded-lg bg-opacity-80">
       <div className="flexError flex items-center justify-center mb-2 w-full bg-authFormBg h-10 rounded-tl-lg rounded rounded-tr-lg bg-opacity-90">
         <h1 className="text-[1.75rem]">Verifying Email Address...</h1>
       </div>
-      <p className="mb-3">Please enter your six-digit verification code</p>
+      <p className="mb-1 text-sm">
+        Please check your email for your four digit verification code
+      </p>
+      <p className="mb-3 italic text-sm">
+        Hint: Check your spam folder and mark as not spam
+      </p>
       <div className="flexError flex">
         <button
           className="bg-button1 rounded-md mr-3 pl-4 pr-4 h-[40px]"
