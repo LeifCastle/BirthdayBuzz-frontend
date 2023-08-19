@@ -174,11 +174,6 @@ const Signup = () => {
     router.push("/auth/login");
   }
 
-  //Resets code sent values when the page refreshes
-  useEffect(() => {
-    codeSent.current = false;
-  }, [router]);
-
   return (
     <div className="bg-[url('/static/images/Auth_Background.png')] w-[100vw] h-[100vh] bg-cover">
       <PageHeader />
