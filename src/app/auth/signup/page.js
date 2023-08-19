@@ -31,7 +31,7 @@ const Signup = () => {
         Please check your email for your four digit verification code
       </p>
       <p className="mb-3 italic text-sm">
-        Hint: Check your spam folder and mark as not spam
+        Hint: Check your spam folder and mark us as not spam
       </p>
       <div className="flexError flex">
         <button
