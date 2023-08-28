@@ -39,6 +39,8 @@ module.exports = {
 
         //New App Temp
         button1: "#6E7E65",
+        cH1: "#364132",
+        cH1Hover: "#455240",
       },
       fontFamily: {
         header: ["var(--font-Catamaran)"],

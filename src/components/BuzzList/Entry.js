@@ -30,8 +30,13 @@ export default function Entry({ data }) {
     }
   }
   return (
-    <li key={data._id} className="flex ml-2">
-      {values}
-    </li>
+    <>
+      <li
+        key={data._id}
+        className="flex pl-2 bg-slate-100 bg-opacity-[.15] hover:bg-opacity-[.20] "
+      >
+        {values}
+      </li>
+    </>
   );
 }
