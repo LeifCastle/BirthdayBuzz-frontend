@@ -36,11 +36,11 @@ export default function Account() {
       )
       .then((response) => {
         console.log(response);
+        setRefresh(!refresh);
       })
       .catch((error) => {
         console.log(error);
       });
-    setRefresh(!refresh);
   }
 
   useEffect(() => {
