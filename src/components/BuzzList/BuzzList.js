@@ -11,9 +11,8 @@ import setAuthToken from "../../utils/setAuthToken";
 export default function BuzzList() {
   //const [isLoading, setLoading] = useState(true);
   const router = useRouter(true);
-  const [refresh, setRefresh] = useState(); //Used to refresh the data populating the buzzlist after the user deletes an entry
+  const [refresh, setRefresh] = useState(); //Used to refresh the data populating the buzzlist after the user create or deletes an entry
   const [entryData, setEntryData] = useState([]); //Represents an array of entries in a user's buzzlist
-  const entryAdded = useRef(false); //Used as a dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
   const [content, setContent] = useState(
     <List handleNewEntry={handleNewEntry} entryData={entryData} />
   );
@@ -55,8 +54,7 @@ export default function BuzzList() {
     } else {
       router.push("/auth/login");
     }
-    entryAdded.current = false;
-  }, [router, entryAdded.current, refresh]); //entryAdded.current
+  }, [router, refresh]);
 
   function handleDeleteEntry(id) {
     console.log("Deleting");
@@ -85,7 +83,8 @@ export default function BuzzList() {
         setContent={setContent}
         handleNewEntry={handleNewEntry}
         entryData={entryData}
-        entryAdded={entryAdded}
+        setRefresh={setRefresh}
+        refresh={refresh}
       />
     );
   }

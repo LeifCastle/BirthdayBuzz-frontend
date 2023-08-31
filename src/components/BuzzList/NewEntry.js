@@ -7,7 +7,8 @@ export default function NewEntry({
   setContent,
   handleNewEntry,
   entryData,
-  entryAdded,
+  setRefresh,
+  refresh,
 }) {
   //---------------------------------------Variables---------------------------------------\\
 
@@ -187,7 +188,7 @@ export default function NewEntry({
       router.push("/auth/login");
     }
     setContent(<List handleNewEntry={handleNewEntry} entryData={entryData} />);
-    entryAdded.current = true; //Trigger dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
+    setRefresh(!refresh); //Trigger dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
   }
 
   //---------------------------------------HTML Visibility----------------------------------------\\
