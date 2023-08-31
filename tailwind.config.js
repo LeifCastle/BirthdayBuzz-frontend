@@ -38,7 +38,8 @@ module.exports = {
         headerSelect: "#6E7E65",
 
         //New App Temp
-        button1: "#6E7E65",
+        button1: "#425948",
+        button1Hover: "#4F5C42",
         cH1: "#364132",
         cH1Hover: "#455240",
       },

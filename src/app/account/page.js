@@ -1,150 +1,139 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation"; // Validate this import with your updated Next.js version.
 import PageHeader from "@/components/page_header";
+import Countdown from "@/components/Countdown";
 import setAuthToken from "@/utils/setAuthToken";
-
-function Countdown({ birthday }) {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(birthday));
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft(birthday));
-    }, 1000);
-
-    return () => clearInterval(timer); // Clear the interval when the component is unmounted.
-  }, [birthday]);
-
-  return (
-    <div>
-      <p>
-        Time left until next birthday: {timeLeft.days} days, {timeLeft.hours}{" "}
-        hours, {timeLeft.minutes} minutes, and {timeLeft.seconds} seconds
-      </p>
-    </div>
-  );
-}
-
-function calculateTimeLeft(birthday) {
-  const now = new Date();
-  const birthDateThisYear = new Date(
-    now.getFullYear(),
-    new Date(birthday).getMonth(),
-    new Date(birthday).getDate()
-  );
-  let nextBirthday = birthDateThisYear;
-
-  if (now > birthDateThisYear) {
-    nextBirthday.setFullYear(now.getFullYear() + 1); // If birthday has already occurred this year, set to next year.
-  }
-
-  const difference = nextBirthday - now;
-
-  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((difference / (1000 * 60)) % 60);
-  const seconds = Math.floor((difference / 1000) % 60);
-
-  return { days, hours, minutes, seconds };
-}
-
-function EntryCard({ entryData }) {
-  let content;
-
-  if (entryData && entryData.length) {
-    content = entryData.map((entry) => (
-      <div key={entry.name}>
-        <h3>
-          {entry.name} {entry.birthday}
-        </h3>
-      </div>
-    ));
-  } else {
-    content = <p>No users in your buzzlist!</p>;
-  }
-
-  return (
-    <div className="entry-card">
-      {content}
-      {/* You can also add other UI elements related to this card here */}
-    </div>
-  );
-}
 
 export default function Account() {
   const router = useRouter();
-  const [userData, setUserData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState("loading");
+  const [refresh, setRefresh] = useState(false);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [birthday, setBirthday] = useState();
   const BASE_URL =
     process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
+
+  function handleEditAccount() {
+    document.querySelector("#editMyAccount").removeAttribute("hidden");
+    document.querySelector("#myAccount").setAttribute("hidden", "hidden");
+  }
+
+  function saveAccountEdits() {
+    document.querySelector("#myAccount").removeAttribute("hidden");
+    document.querySelector("#editMyAccount").setAttribute("hidden", "hidden");
+    const updatedUser = {
+      firstName: firstName,
+      lastName: lastName,
+      birthday: birthday,
+    };
+    axios
+      .put(
+        `${BASE_URL}/account/edit/${localStorage.getItem("email")}`,
+        updatedUser
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setRefresh(!refresh);
+  }
 
   useEffect(() => {
     setAuthToken(localStorage.getItem("jwtToken"));
     if (localStorage.getItem("jwtToken")) {
       axios
-        .get(`${BASE_URL}/account`)
+        .get(`${BASE_URL}/account/${localStorage.getItem("email")}`)
         .then((response) => {
-          setUserData(response.data);
-          setIsLoading(false);
+          console.log("User Data: ", response.data[0]);
+          setUserData(response.data[0]);
+          setFirstName(response.data[0].firstName);
+          setLastName(response.data[0].lastName);
+          setBirthday(response.data[0].birthday);
         })
         .catch((error) => {
           console.error(
             "Error fetching user data:",
             error.response ? error.response.data : error
           );
-          setIsLoading(false);
         });
     } else {
       router.push("/auth/login");
     }
-  }, []);
+  }, [router, refresh]);
 
-  if (isLoading) return <p>Loading user data...</p>;
-  if (!userData) return <p>No user data available.</p>;
-
-  return (
-    <div className="bg-[url('/static/images/App_Background.png')] w-[100vw] h-[100vh] bg-cover">
-      <PageHeader />
-      <div className="container mx-auto p-4">
-        {/* This is the main grid container */}
-        <div className="grid grid-cols-2 gap-4">
-          {/* User Details Section - Top Left */}
-          <div className="col-span-1">
-            <h1 className="text-2xl font-bold mb-4">User Details</h1>
-            <p>
-              <strong>First Name:</strong> {userData.firstName}
-            </p>
-            <p>
-              <strong>Last Name:</strong> {userData.lastName}
-            </p>
-            <p>
-              <strong>Email:</strong> {userData.email}
-            </p>
-            <p>
-              <strong>Birthday:</strong> {userData.birthday}
-            </p>
-            <p>
-              <strong>Phone:</strong> {userData.phone}
-            </p>
+  if (userData !== "loading") {
+    return (
+      <div className="bg-[url('/static/images/App_Background.png')] w-[100vw] h-[100vh] bg-cover">
+        <PageHeader />
+        <div className="flex flexError place-content-between text-slate-200">
+          <div className="bg-slate-100 bg-opacity-[.15] ml-10 rounded-md">
+            <h1 className="text-2xl font-bold text-center bg-cH1 bg-opacity-[1] rounded-tl-md rounded-tr-md">
+              My Account
+            </h1>
+            <hr></hr>
+            <div id="myAccount">
+              <div className="pl-4 pr-4 pt-2 pb-2 w-[300px] h-[130px]">
+                <p>First Name: {userData.firstName}</p>
+                <p className="mt-1">Last Name: {userData.lastName}</p>
+                <p className="mt-1">Email: {userData.email}</p>
+                <p className="mt-1">Birthday: {userData.birthday}</p>
+              </div>
+              <button
+                className="bg-button1 rounded-bl-md rounded-br-md mr-2 pl-4 pr-4 h-[40px] w-full hover:bg-opacity-[.8]"
+                onClick={handleEditAccount}
+              >
+                Edit
+              </button>
+            </div>
+            <div id="editMyAccount" hidden="hidden">
+              <div className="pl-4 pr-4 pt-2 pb-2 w-[300px] h-[130px]">
+                <p>
+                  First Name:
+                  <input
+                    className="ring-slate-200 ring-[1px] rounded-md ml-1 pl-2 w-[150px] bg-transparent bg-opacity-[.5]"
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  ></input>
+                </p>
+                <p className="mt-1">
+                  Last Name:
+                  <input
+                    className="ring-slate-200 ring-[1px] rounded-md ml-1 pl-2 w-[150px] bg-transparent bg-opacity-[.5]"
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  ></input>
+                </p>
+                <p className="mt-1">Email: {userData.email}</p>
+                <p className="mt-1">
+                  Birthday:
+                  <input
+                    className="ring-slate-200 ring-[1px] rounded-md ml-1 pl-2 w-[150px] bg-transparent bg-opacity-[.5]"
+                    type="date"
+                    value={birthday}
+                    onChange={(e) => setBirthday(e.target.value)}
+                  ></input>
+                </p>
+              </div>
+              <button
+                className="bg-[#404F60] rounded-bl-md rounded-br-md mr-2 pl-4 pr-4 h-[40px] w-full hover:bg-opacity-[.8]"
+                onClick={saveAccountEdits}
+              >
+                Save
+              </button>
+            </div>
           </div>
-
-          {/* BuzzList - Top Right */}
-
-          <div className="col-span-1">
-            <h1 className="font-bold mb-4">BuzzList</h1>
-            <EntryCard entryData={userData.buzzList} />
+          <div className="bg-slate-100 bg-opacity-[.15] mr-10 rounded-md">
+            <Countdown birthday={userData.birthday} />
           </div>
-        </div>
-
-        {/* Countdown - Bottom Center */}
-        <h1 className="mt-10 text-center font-bold mb-4">
-          Time Until my Bday:
-        </h1>
-        <div className="flex justify-center">
-          <Countdown birthday={userData.birthday} />
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

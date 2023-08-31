@@ -213,7 +213,7 @@ const Signup = () => {
                 required
               />
               <input
-                type="text"
+                type="date"
                 className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
                 placeholder="Birthday"
                 value={birthday}
