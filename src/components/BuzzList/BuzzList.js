@@ -9,9 +9,8 @@ import NewEntry from "./NewEntry";
 import setAuthToken from "../../utils/setAuthToken";
 
 export default function BuzzList() {
-  //const [isLoading, setLoading] = useState(true);
   const router = useRouter(true);
-  const [refresh, setRefresh] = useState(); //Used to refresh the data populating the buzzlist after the user create or deletes an entry
+  const [refresh, setRefresh] = useState(true); //Used to refresh the data populating the buzzlist after the user create or deletes an entry
   const [entryData, setEntryData] = useState([]); //Represents an array of entries in a user's buzzlist
   const [content, setContent] = useState(
     <List handleNewEntry={handleNewEntry} entryData={entryData} />
