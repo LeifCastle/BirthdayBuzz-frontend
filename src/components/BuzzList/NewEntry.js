@@ -178,17 +178,18 @@ export default function NewEntry({
         .post(`${BASE_URL}/buzzlist/new`, newEntry)
         .then((response) => {
           console.log(`Response: ${response.data}`);
-          //Add some message to indicate to user their creation was sucessfull
+          setRefresh(!refresh); //Trigger dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
+          setContent(
+            <List handleNewEntry={handleNewEntry} entryData={entryData} />
+          );
         })
         .catch((error) => {
-          console.log(`Error fetchign data: ${error}`);
+          console.log(`Error fetching data: ${error}`);
           //Add some message to indicate to user their creation was NOT sucessfull
         });
     } else {
       router.push("/auth/login");
     }
-    setContent(<List handleNewEntry={handleNewEntry} entryData={entryData} />);
-    setRefresh(!refresh); //Trigger dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
   }
 
   //---------------------------------------HTML Visibility----------------------------------------\\
