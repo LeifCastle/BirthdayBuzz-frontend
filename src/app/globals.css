@@ -23,3 +23,16 @@ a {
 .flexError {
   display: flex;
 }
+.noHover {
+  pointer-events: none;
+}
+
+li[show] {
+  pointer-events: auto;
+}
+li[hide] {
+  display: none;
+}
+button {
+  pointer-events: auto;
+}

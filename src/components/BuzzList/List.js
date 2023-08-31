@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import ColumnHeaders from "./ColumnHeaders";
 import Entry from "./Entry";
 
-export default function List({ handleNewEntry, entryData }) {
+export default function List({ handleNewEntry, entryData, handleDeleteEntry }) {
   console.log("Entry data: ", entryData);
 
   const noEntryHTML = (
@@ -13,15 +13,22 @@ export default function List({ handleNewEntry, entryData }) {
   );
 
   const entries = entryData.map((entry) => {
-    return <Entry key={entry._id + "Z"} data={entry} />; //Update to an id of some sort for filterability
+    return (
+      <Entry
+        handleDeleteEntry={handleDeleteEntry}
+        key={entry._id + "Z"}
+        data={entry}
+      />
+    ); //Update to an id of some sort for filterability
   });
 
   return (
     <div className="flexError flex-col h-[clamp(10vh,20vh,80vh)]">
       <ColumnHeaders />
-      <ol className="grow flex-col flexError border-l-[4px] border-r-[4px] border-cH1 border-opacity-[1]">
+      <ol className="noHover grow group/A flex-col flexError border-l-[4px] border-r-[4px] border-cH1 border-opacity-[1]">
         {entries[0] ? entries : noEntryHTML}
         <div className="bg-slate-100 bg-opacity-[.15] grow"></div>
+        <div className="filler bg-slate-100 bg-opacity-[.15] group-hover/A:h-0 h-[5px] hover-disabled"></div>
       </ol>
       <div className="rounded-bl-md rounded-br-md bg-cH1">
         <button

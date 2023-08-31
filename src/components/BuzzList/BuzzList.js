@@ -10,7 +10,8 @@ import setAuthToken from "../../utils/setAuthToken";
 
 export default function BuzzList() {
   //const [isLoading, setLoading] = useState(true);
-  const router = useRouter();
+  const router = useRouter(true);
+  const [refresh, setRefresh] = useState(); //Used to refresh the data populating the buzzlist after the user deletes an entry
   const [entryData, setEntryData] = useState([]); //Represents an array of entries in a user's buzzlist
   const entryAdded = useRef(false); //Used as a dependency in useEffect that grabs user's Buzzlist to get new data when a user adds an entry
   const [content, setContent] = useState(
@@ -55,11 +56,27 @@ export default function BuzzList() {
       router.push("/auth/login");
     }
     entryAdded.current = false;
-  }, [router, entryAdded.current]); //entryAdded.current
+  }, [router, entryAdded.current, refresh]); //entryAdded.current
+
+  function handleDeleteEntry(id) {
+    console.log("Deleting");
+    axios
+      .delete(`${BASE_URL}/buzzlist/${localStorage.getItem("email")}/${id}`)
+      .then((response) => {
+        console.log("Response: ", response);
+        setRefresh(!refresh);
+      });
+  }
 
   //--Update the user's buzzlist whenever entryData changes or
   useEffect(() => {
-    setContent(<List handleNewEntry={handleNewEntry} entryData={entryData} />);
+    setContent(
+      <List
+        handleNewEntry={handleNewEntry}
+        entryData={entryData}
+        handleDeleteEntry={handleDeleteEntry}
+      />
+    );
   }, [entryData]);
 
   function handleNewEntry() {
@@ -72,8 +89,6 @@ export default function BuzzList() {
       />
     );
   }
-
-  //if (isLoading) return <p>Loading...</p>;
 
   return <div className="bg-layoutBg w-[80%] rounded-md">{content}</div>;
 }
