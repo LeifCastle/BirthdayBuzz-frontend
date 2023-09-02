@@ -14,20 +14,12 @@ export default function Account() {
   const [lastName, setLastName] = useState();
   const [birthday, setBirthday] = useState();
   const [timezone, setTimezone] = useState();
-  const [buzzTime, setBuzzTime] = useState();
+  const [hour, setHour] = useState();
+  const [minute, setMinute] = useState("");
+  const [AmPm, setAmPm] = useState();
+  const keycode = useRef();
   const BASE_URL =
     process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
-
-  function updateBuzzTime(e) {
-    setBuzzTime(e.target.value);
-    axios
-      .put(`${BASE_URL}/account/buzztime/${localStorage.getItem("email")}`, {
-        buzzTime: e.target.value,
-      })
-      .then((response) => {
-        console.log(response);
-      });
-  }
 
   function updateTimezone(e) {
     setTimezone(e.target.value);
@@ -43,6 +35,34 @@ export default function Account() {
   function handleEditAccount() {
     document.querySelector("#editMyAccount").removeAttribute("hidden");
     document.querySelector("#myAccount").setAttribute("hidden", "hidden");
+  }
+
+  function handleEditSettings() {
+    //Add disabled:bg tailwind css color changes for hour and minute inputs
+    let settingsBttn = document.querySelector("#editSettings");
+    let dropdowns = document.querySelectorAll(".settingsDD");
+    if (settingsBttn.textContent === "Edit") {
+      settingsBttn.textContent = "Save";
+      dropdowns.forEach((dropdown) => {
+        dropdown.removeAttribute("disabled");
+      });
+      settingsBttn.classList.remove("bg-button1");
+      settingsBttn.classList.add("bg-[#404F60]");
+    } else {
+      axios
+        .put(`${BASE_URL}/account/buzztime/${localStorage.getItem("email")}`, {
+          buzzTime: [hour, minute, AmPm],
+        })
+        .then((response) => {
+          console.log(response);
+        });
+      dropdowns.forEach((dropdown) => {
+        dropdown.setAttribute("disabled", "disabled");
+      });
+      settingsBttn.textContent = "Edit";
+      settingsBttn.classList.remove("bg-[#404F60]");
+      settingsBttn.classList.add("bg-button1");
+    }
   }
 
   function saveAccountEdits() {
@@ -67,6 +87,40 @@ export default function Account() {
       });
   }
 
+  function updateHour(e) {
+    if (
+      (e.target.value >= 1 && e.target.value <= 12) ||
+      e.target.value === ""
+    ) {
+      setHour(e.target.value);
+    }
+  }
+
+  function updateKeyCode(e) {
+    keycode.current = e.key;
+  }
+
+  function updateMinute(e) {
+    let minuteArr = minute.split("");
+    if (minuteArr.length < 1) {
+      setMinute(0 + e.target.value);
+    }
+    if (parseInt(minuteArr[0]) === 0 && keycode.current !== "Backspace") {
+      let arr = e.target.value.split("");
+      if (arr[1] + arr[2] <= 59) {
+        setMinute(arr[1] + arr[2]);
+      }
+    }
+    if (parseInt(minuteArr[0]) !== 0 && keycode.current === "Backspace") {
+      console.log("C");
+      setMinute(0 + minuteArr[1]);
+    }
+    if (parseInt(minuteArr[0]) === 0 && keycode.current === "Backspace") {
+      console.log("D");
+      setMinute("");
+    }
+  }
+
   useEffect(() => {
     setAuthToken(localStorage.getItem("jwtToken"));
     if (localStorage.getItem("jwtToken")) {
@@ -77,7 +131,7 @@ export default function Account() {
           setUserData(response.data[0]);
           setFirstName(response.data[0].firstName);
           setLastName(response.data[0].lastName);
-          setBirthday(response.data[0].birthday);
+          setBirthday(response.data[0].birthday); //Convert to input's format
           setBuzzTime(response.data[0].buzzTime);
           setTimezone(response.data[0].timezone);
         })
@@ -156,18 +210,21 @@ export default function Account() {
                 </button>
               </div>
             </div>
-            <div className="bg-slate-100 bg-opacity-[.15] mr-10 rounded-md w-[60vw]">
-              <p className="text-2xl font-bold text-center bg-cH1 bg-opacity-[1] rounded-tl-md rounded-tr-md">
-                Settings
-              </p>
-              <hr className="border-slate-400"></hr>
+            <div className="flex-col flexError justify-between bg-slate-100 bg-opacity-[.15] mr-10 rounded-md w-[60vw]">
+              <div>
+                <p className="text-2xl font-bold text-center bg-cH1 bg-opacity-[1] rounded-tl-md rounded-tr-md">
+                  Settings
+                </p>
+                <hr className="border-slate-400"></hr>
+              </div>
               <div className="flex flexError">
                 <div className="ml-2 flex-basis-1/3 flex-col flexError items-center">
                   <p>Timezone: </p>
                   <select
-                    className="bg-black bg-opacity-[.55] rounded-md p-1"
+                    className="settingsDD bg-black bg-opacity-[.55] rounded-md p-1"
                     onChange={updateTimezone}
                     value={timezone}
+                    disabled="disabled"
                   >
                     Timezones
                     <option className="bg-black bg-opacity-[.85]" value="UTC">
@@ -189,30 +246,47 @@ export default function Account() {
                 </div>
                 <div className="ml-2 flex-basis-1/3 flex-col flexError items-center">
                   <p>Buzz Time: </p>
-                  <select
-                    className="bg-black bg-opacity-[.55] rounded-md p-1"
-                    onChange={updateBuzzTime}
-                    value={buzzTime}
-                  >
-                    Time of day
-                    <option className="bg-black bg-opacity-[.85]" value="5AM">
-                      5:00 AM
-                    </option>
-                    <option className="bg-black bg-opacity-[.85]" value="10AM">
-                      10:00 AM
-                    </option>
-                    <option className="bg-black bg-opacity-[.85]" alue="CST">
-                      Noon
-                    </option>
-                    <option className="bg-black bg-opacity-[.85]" value="MST">
-                      2:00 PM
-                    </option>
-                    <option className="bg-black bg-opacity-[.85]" value="PST">
-                      8:00 PM
-                    </option>
-                  </select>
+                  <div className="flex flexError">
+                    <input
+                      className="settingsDD w-[25px] bg-black bg-opacity-[.55] rounded-md pl-2 "
+                      type="number"
+                      onChange={updateHour}
+                      value={hour}
+                      disabled="disabled"
+                    ></input>
+                    <span className="mx-1 font-bold">:</span>
+                    <input
+                      className="settingsDD w-[35px] bg-black bg-opacity-[.55] rounded-md pl-2"
+                      type="number"
+                      onChange={updateMinute}
+                      onKeyDown={updateKeyCode}
+                      value={minute}
+                      disabled="disabled"
+                    ></input>
+                    <select
+                      className="settingsDD ml-2 bg-black bg-opacity-[.55] rounded-md p-1 overflow-scroll"
+                      onChange={(e) => setAmPm(e.target.value)}
+                      disabled="disabled"
+                      value={AmPm}
+                    >
+                      <option className="bg-black bg-opacity-[.85]" value="AM">
+                        AM
+                      </option>
+                      <option className="bg-black bg-opacity-[.85]" value="AM">
+                        PM
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
+              <div className="grow"></div>
+              <button
+                id="editSettings"
+                className="bg-button1 rounded-bl-md rounded-br-md mr-2 pl-4 pr-4 h-[40px] w-full hover:bg-opacity-[.8]"
+                onClick={handleEditSettings}
+              >
+                Edit
+              </button>
             </div>
           </div>
           <div className="self-center mt-20">
