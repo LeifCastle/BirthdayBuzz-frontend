@@ -14,9 +14,9 @@ export default function Account() {
   const [lastName, setLastName] = useState();
   const [birthday, setBirthday] = useState();
   const [timezone, setTimezone] = useState();
-  const [hour, setHour] = useState();
-  const [minute, setMinute] = useState("");
-  const [AmPm, setAmPm] = useState();
+  const [hour, setHour] = useState("8");
+  const [minute, setMinute] = useState("30");
+  const [AmPm, setAmPm] = useState("AM");
   const keycode = useRef();
   const BASE_URL =
     process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
@@ -272,7 +272,7 @@ export default function Account() {
                       <option className="bg-black bg-opacity-[.85]" value="AM">
                         AM
                       </option>
-                      <option className="bg-black bg-opacity-[.85]" value="AM">
+                      <option className="bg-black bg-opacity-[.85]" value="PM">
                         PM
                       </option>
                     </select>
