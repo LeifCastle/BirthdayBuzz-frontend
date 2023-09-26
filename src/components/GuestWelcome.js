@@ -1,13 +1,22 @@
 "use client";
 
 import PageHeader from "@/components/page_header";
+import { useRouter } from "next/navigation";
 
 export default function GuestWelcome() {
+  const router = useRouter();
+
+  function handleGettingStarted() {
+    router.push("/auth/login");
+  }
+
   return (
-    <div className="bg-slate-300 w-[100vw] h-[100vh] bg-cover">
-      <PageHeader />
-      <main id="flexError" className="flex-col items-center pt-4">
-        <div className="flex justify-evenly w-full my-8">
+    <div className="bg-slate-300 w-[100vw]">
+      <div className="fixed top-0 w-full">
+        <PageHeader />
+      </div>
+      <main id="flexError" className="flex-col items-center">
+        <div className="flex justify-evenly w-full py-12 mt-headerH  bg bg-gradient-to-b from-slate-100 to-slate-300">
           <div className="bg-[url('/static/images/Birthday_Reminder.png')] w-[40vw] h-[40vw] bg-cover rounded-md"></div>
           <div className="w-[40vw] h-[40vw] bg-[#AAAEAA] text-black p-8 rounded-md">
             <div className="flex flex-col items-center">
@@ -42,16 +51,37 @@ export default function GuestWelcome() {
               </p>
             </div>
             <div className="w-full flex justify-center">
-              <button className="text-3xl font-bold opacity-70 bg-slate-500 rounded-md p-4">
+              <button
+                className="text-3xl font-bold opacity-70 bg-slate-500 rounded-md p-4"
+                onClick={handleGettingStarted}
+              >
                 Get Started
               </button>
             </div>
           </div>
         </div>
-        <div>
-          <p className="text-4xl font-semibold text-center mb-3">
+        <div className="flex flex-col items-center w-full bg bg-gradient-to-b from-slate-100 to-slate-300 text-black py-12">
+          <p className="text-4xl font-semibold text-center mb-10">
             How it works
           </p>
+          <div className="flex justify-evenly w-full">
+            <div className="flex flex-col items-center">
+              <div className="bg-[url('/static/images/Signup_Icon.jpg')] w-[268px] h-[250px] bg-contain"></div>
+              <p className="text-2xl font-bold ml-[18px] mt-2">Register</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-[url('/static/images/Input_Birthdays_Icon.png')] w-[250px] h-[250px] bg-contain"></div>
+              <p className="text-2xl font-bold mt-2">Fill out birthdays</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-[url('/static/images/Notification_Time_Icon.png')] w-[250px] h-[250px] bg-contain"></div>
+              <p className="text-2xl font-bold mt-2">Set notification time</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-[url('/static/images/Get_Notified_Icon.png')] w-[250px] h-[250px] bg-contain"></div>
+              <p className="text-2xl font-bold mt-2">Get notified</p>
+            </div>
+          </div>
         </div>
       </main>
     </div>
