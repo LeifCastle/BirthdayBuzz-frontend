@@ -76,13 +76,13 @@ export default function PageHeader() {
 
   return (
     <div
-      className={`flex items-center justify-center h-headerH pb-1 bg-gradient-to-b from-pageHBg from-70% text-white text-4xl font-header`}
+      className={`flex items-center justify-center h-headerH bg-pageHBg text-white text-4xl font-header`}
     >
-      <div className="basis-2/5 flex justify-left mb-4 ml-VH5 items-center">
+      <div className="basis-2/5 flex justify-left ml-VH5 items-center">
         {pageTabs}
       </div>
       <div className="basis-3/5">
-        <div className="mb-4 text-base text-end mr-10">{logout}</div>
+        <div className="text-base text-end mr-10">{logout}</div>
       </div>
     </div>
   );

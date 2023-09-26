@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        headerH: "10vh",
+        headerH: "9vh",
         sceneW: "60vw",
         sceneH: "60vh",
         layout_themeW: "15vw",
@@ -39,6 +39,7 @@ module.exports = {
 
         //New App Temp
         button1: "#425948",
+        button2: "#06C59C",
         button1Hover: "#4F5C42",
         cH1: "#364132",
         cH1Hover: "#455240",

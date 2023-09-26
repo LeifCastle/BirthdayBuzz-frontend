@@ -88,5 +88,12 @@ export default function BuzzList() {
     );
   }
 
-  return <div className="bg-layoutBg w-[80%] rounded-md">{content}</div>;
+  return (
+    <div className="bg-[url('/static/images/App_Background.png')] w-[100vw] h-[100vh] bg-cover">
+      <PageHeader />
+      <main id="flexError" className="flex-col items-center pt-4">
+        <div className="bg-layoutBg w-[80%] rounded-md">{content}</div>
+      </main>
+    </div>
+  );
 }
