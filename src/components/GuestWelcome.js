@@ -16,37 +16,40 @@ export default function GuestWelcome() {
         <PageHeader currentPage={"HomeTab"} />
       </div>
       <main id="flexError" className="flex-col items-center">
-        <div className="flex justify-evenly w-full py-12 mt-headerH bg-gradient-to-b from-slate-100 to-slate-300">
-          <div className="bg-[url('/static/images/Birthday_Reminder.png')] w-[30vw] h-[30vw] bg-cover rounded-md"></div>
-          <div className="w-[50vw] h-[30vw] bg-[#bebebe] text-black p-8 rounded-md">
+        <div className="flex items-center justify-evenly w-full md:py-12 mt-headerH bg-gradient-to-b from-slate-100 to-slate-300">
+          <div className="hidden lg:block bg-[url('/static/images/Birthday_Reminder.png')] w-[30vw] h-[30vw] bg-cover rounded-md"></div>
+          <div className="flex flex-col w-full lg:w-[50vw] h-[auto] xl:h-[30vw] lg:from-[#bebebe] lg:to-[#bebebe] bg-gradient-to-b from-slate-100 to-slate-300 text-black rounded-md">
             <div className="flex flex-col items-center">
-              <p className="text-4xl font-semibold text-center mb-3">
+              <p className="text-2xl xs:text-3xl md:text-4xl pt-8 font-semibold text-center px-2 mb-3">
                 Remember Their Birthday
               </p>
-              <hr className="w-[32vw] h-2 bg-black opacity-30 rounded-md mb-8"></hr>
+              <hr className="w-[80vw] md:w-[60vw] lg:w-[70%] h-2 bg-black opacity-30 rounded-md mb-4"></hr>
             </div>
-            <div className="flex mb-4">
-              <span className="text-4xl text-black">- </span>
-              <p className="text-2xl ml-2 mt-1">
-                We let you know when the big day is coming up
-              </p>
+            <div className="px-8 flex flex-col items-center lg:items-start">
+              <div>
+                <div className="flex mb-4">
+                  <span className="text-4xl text-black">- </span>
+                  <p className="text-xl sm:text-2xl ml-2 mt-1">
+                    Get notified leading up to and on their birthday
+                  </p>
+                </div>
+                <div className="flex mb-4">
+                  <span className="text-4xl text-black">- </span>
+                  <p className="text-xl sm:text-2xl ml-2 mt-1">
+                    Customize reminder messages and delivery time
+                  </p>
+                </div>
+                <div className="flex">
+                  <span className="text-4xl text-black">- </span>
+                  <p className="text-xl sm:text-2xl ml-2 mt-1">
+                    Just add their birthday and we'll handle the rest
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="flex mb-4">
-              <span className="text-4xl text-black">- </span>
-              <p className="text-2xl ml-2 mt-1">
-                Custom notification message and notification time
-              </p>
-            </div>
-            <div className="flex">
-              <span className="text-4xl text-black">- </span>
-              <p className="text-2xl ml-2 mt-1">
-                Its as simple as adding your friends and family to your buzz
-                list and getting notified
-              </p>
-            </div>
-            <div className="grow flex items-center justify-center w-full h-[40%]">
+            <div className="grow flex items-center justify-center w-full">
               <button
-                className="w-[75%] h-[50%] hover:w-[80%] hover:h-[55%] hover:text-4xl hover:bg-white hover:rounded-[16px] text-3xl font-bold opacity-70 bg-button2 rounded-[10px] p-4 transition-all ease-linear duration-[200ms]"
+                className="w-[80vw] lg:w-[70%] hover:w-[85vw] lg:hover:w-[80%] hover:text-4xl hover:bg-white hover:rounded-[16px] text-3xl font-bold opacity-70 bg-button2 rounded-[10px] p-4 my-8 transition-all ease-linear duration-[200ms]"
                 onClick={handleGettingStarted}
               >
                 Get Started

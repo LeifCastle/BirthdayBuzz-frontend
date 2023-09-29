@@ -35,6 +35,7 @@ a {
 .flexError {
   display: flex;
 }
+
 .noHover {
   pointer-events: none;
 }

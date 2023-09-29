@@ -82,15 +82,18 @@ export default function PageHeader({ currentPage }) {
       setPageTabs(null);
       setAccountTabs(
         <>
-          <Link href={`/auth/login`} className="tab text-pageTab pt-1">
+          <Link
+            href={`/auth/login`}
+            className="tab text-md xs:text-lg sm:text-pageTab pt-1"
+          >
             Login
           </Link>
-          <span className="ml-3 mr-3 text-pageTab font-medium text-gray-400 pt-1">
+          <span className="mx-2 sm:mx-3 text-pageTab font-medium text-gray-400 pt-1">
             |
           </span>
           <Link
             href="/auth/signup"
-            className="tab bg-button2 rounded-lg px-3 py-2 text-pageTab text-black"
+            className="tab bg-button2 rounded-lg px-3 py-2 text-black text-md xs:text-lg sm:text-pageTab"
           >
             Signup
           </Link>
@@ -117,14 +120,17 @@ export default function PageHeader({ currentPage }) {
     <div
       className={`flex items-center justify-center h-headerH bg-pageHBg text-white text-4xl font-header`}
     >
-      <div className="basis-3/5 flex justify-left ml-VH5 items-center">
-        <h1 className="pl-20 pr-20 font-semibold" onClick={returnToLandingPage}>
+      <div className="basis-3/5 flex justify-left items-center">
+        <h1
+          className="text-2xl xs:text-3xl sm:text-4xl text-center px-[5vw] font-semibold"
+          onClick={returnToLandingPage}
+        >
           Birthday Buzz
         </h1>
         {pageTabs}
       </div>
       <div className="basis-2/5">
-        <div className="text-base text-end mr-10">{accountTabs}</div>
+        <div className="text-base text-end mr-[5vw]">{accountTabs}</div>
       </div>
     </div>
   );
