@@ -67,7 +67,7 @@ export default function Find() {
 
   return (
     <div className="bg-[url('/static/images/App_Background.png')] w-[100vw] h-[100vh] bg-cover">
-      <PageHeader />
+      <PageHeader currentPage={"FindTab"} />
       <div className="container mx-auto mt-10 px-4">
         <input
           type="text"

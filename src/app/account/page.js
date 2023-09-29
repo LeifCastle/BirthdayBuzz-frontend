@@ -149,7 +149,7 @@ export default function Account() {
   if (userData !== "loading") {
     return (
       <div className="bg-[url('/static/images/App_Background.png')] w-[100vw] h-[100vh] bg-cover">
-        <PageHeader />
+        <PageHeader currentPage={"AccountTab"} />
         <div className="flex-col flexError place-content-between text-slate-200">
           <div className="flex flexError place-content-between">
             <div className="bg-slate-100 bg-opacity-[.15] ml-10 rounded-md">
@@ -298,7 +298,7 @@ export default function Account() {
   } else {
     return (
       <div className="bg-[url('/static/images/App_Background.png')] w-[100vw] h-[100vh] bg-cover">
-        <PageHeader />
+        <PageHeader currentPage={"AccountTab"} />
       </div>
     );
   }

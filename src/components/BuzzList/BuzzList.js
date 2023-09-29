@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import List from "./List";
 import NewEntry from "./NewEntry";
 import setAuthToken from "../../utils/setAuthToken";
+import PageHeader from "../page_header";
 
 export default function BuzzList() {
   const router = useRouter(true);
@@ -90,7 +91,7 @@ export default function BuzzList() {
 
   return (
     <div className="bg-[url('/static/images/App_Background.png')] w-[100vw] h-[100vh] bg-cover">
-      <PageHeader />
+      <PageHeader currentPage={"HomeTab"} />
       <main id="flexError" className="flex-col items-center pt-4">
         <div className="bg-layoutBg w-[80%] rounded-md">{content}</div>
       </main>

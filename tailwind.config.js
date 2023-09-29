@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        headerH: "9vh",
+        headerH: "10vh",
         sceneW: "60vw",
         sceneH: "60vh",
         layout_themeW: "15vw",
@@ -47,6 +47,9 @@ module.exports = {
       },
       fontFamily: {
         header: ["var(--font-Catamaran)"],
+      },
+      fontSize: {
+        pageTab: "1.3rem",
       },
     },
   },

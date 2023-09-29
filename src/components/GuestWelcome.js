@@ -7,13 +7,13 @@ export default function GuestWelcome() {
   const router = useRouter();
 
   function handleGettingStarted() {
-    router.push("/auth/login");
+    router.push("/auth/signup");
   }
 
   return (
     <div className="bg-slate-300 w-[100vw]">
-      <div className="fixed top-0 w-full">
-        <PageHeader />
+      <div className="fixed top-0 w-full z-[2]">
+        <PageHeader currentPage={"HomeTab"} />
       </div>
       <main id="flexError" className="flex-col items-center">
         <div className="flex justify-evenly w-full py-12 mt-headerH bg-gradient-to-b from-slate-100 to-slate-300">
