@@ -41,6 +41,7 @@ module.exports = {
         button1: "#425948",
         button2: "#06C59C",
         button1Hover: "#4F5C42",
+        button2Hover: "#448472",
         cH1: "#364132",
         cH1Hover: "#455240",
       },

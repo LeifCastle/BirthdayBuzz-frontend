@@ -16,20 +16,14 @@ export default function GuestWelcome() {
         <PageHeader />
       </div>
       <main id="flexError" className="flex-col items-center">
-        <div className="flex justify-evenly w-full py-12 mt-headerH  bg bg-gradient-to-b from-slate-100 to-slate-300">
-          <div className="bg-[url('/static/images/Birthday_Reminder.png')] w-[40vw] h-[40vw] bg-cover rounded-md"></div>
-          <div className="w-[40vw] h-[40vw] bg-[#AAAEAA] text-black p-8 rounded-md">
+        <div className="flex justify-evenly w-full py-12 mt-headerH bg-gradient-to-b from-slate-100 to-slate-300">
+          <div className="bg-[url('/static/images/Birthday_Reminder.png')] w-[30vw] h-[30vw] bg-cover rounded-md"></div>
+          <div className="w-[50vw] h-[30vw] bg-[#bebebe] text-black p-8 rounded-md">
             <div className="flex flex-col items-center">
               <p className="text-4xl font-semibold text-center mb-3">
                 Remember Their Birthday
               </p>
               <hr className="w-[32vw] h-2 bg-black opacity-30 rounded-md mb-8"></hr>
-            </div>
-            <div className="flex mb-4">
-              <span className="text-4xl text-black">- </span>
-              <p className="text-2xl ml-2 mt-1">
-                Never forget another birthday
-              </p>
             </div>
             <div className="flex mb-4">
               <span className="text-4xl text-black">- </span>
@@ -43,16 +37,16 @@ export default function GuestWelcome() {
                 Custom notification message and notification time
               </p>
             </div>
-            <div className="flex mb-8">
+            <div className="flex">
               <span className="text-4xl text-black">- </span>
               <p className="text-2xl ml-2 mt-1">
-                Its as simple as adding your friends and family to a buzz list
-                and getting notified
+                Its as simple as adding your friends and family to your buzz
+                list and getting notified
               </p>
             </div>
-            <div className="w-full flex justify-center">
+            <div className="grow flex items-center justify-center w-full h-[40%]">
               <button
-                className="text-3xl font-bold opacity-70 bg-slate-500 rounded-md p-4"
+                className="w-[75%] h-[50%] hover:w-[80%] hover:h-[55%] hover:text-4xl hover:bg-white hover:rounded-[16px] text-3xl font-bold opacity-70 bg-button2 rounded-[10px] p-4 transition-all ease-linear duration-[200ms]"
                 onClick={handleGettingStarted}
               >
                 Get Started
@@ -60,9 +54,9 @@ export default function GuestWelcome() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center w-full bg bg-gradient-to-b from-slate-100 to-slate-300 text-black py-12">
-          <p className="text-4xl font-semibold text-center mb-10">
-            How it works
+        <div className="flex flex-col items-center w-full bg-gradient-to-b from-slate-100 to-slate-300 text-black pt-8 pb-14">
+          <p className="text-5xl font-semibold text-center mb-12">
+            How It Works
           </p>
           <div className="flex justify-evenly w-full">
             <div className="flex flex-col items-center">
@@ -71,15 +65,15 @@ export default function GuestWelcome() {
             </div>
             <div className="flex flex-col items-center">
               <div className="bg-[url('/static/images/Input_Birthdays_Icon.png')] w-[250px] h-[250px] bg-contain"></div>
-              <p className="text-2xl font-bold mt-2">Fill out birthdays</p>
+              <p className="text-2xl font-bold mt-2">Add Birthdays</p>
             </div>
             <div className="flex flex-col items-center">
               <div className="bg-[url('/static/images/Notification_Time_Icon.png')] w-[250px] h-[250px] bg-contain"></div>
-              <p className="text-2xl font-bold mt-2">Set notification time</p>
+              <p className="text-2xl font-bold mt-2">Pick Notification Time</p>
             </div>
             <div className="flex flex-col items-center">
               <div className="bg-[url('/static/images/Get_Notified_Icon.png')] w-[250px] h-[250px] bg-contain"></div>
-              <p className="text-2xl font-bold mt-2">Get notified</p>
+              <p className="text-2xl font-bold mt-2">Get Notified</p>
             </div>
           </div>
         </div>
