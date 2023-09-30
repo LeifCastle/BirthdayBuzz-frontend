@@ -42,7 +42,7 @@ export default function GuestWelcome() {
                 <div className="flex">
                   <span className="text-4xl text-black">- </span>
                   <p className="text-xl sm:text-2xl ml-2 mt-1">
-                    Just add their birthday and we'll handle the rest
+                    Just add their birthday and we&apos;ll handle the rest
                   </p>
                 </div>
               </div>
