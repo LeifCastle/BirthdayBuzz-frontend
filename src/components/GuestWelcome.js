@@ -15,7 +15,7 @@ export default function GuestWelcome() {
       <div className="fixed top-0 w-full z-[2]">
         <PageHeader currentPage={"HomeTab"} />
       </div>
-      <main id="flexError" className="flex-col items-center">
+      <main id="flexError" className="flex-col items-center h-screen">
         <div className="flex items-center justify-evenly w-full md:py-12 mt-headerH bg-gradient-to-b from-slate-100 to-slate-300">
           <div className="hidden lg:block bg-[url('/static/images/Birthday_Reminder.png')] w-[30vw] h-[30vw] bg-cover rounded-md"></div>
           <div className="flex flex-col w-full lg:w-[50vw] h-[auto] xl:h-[30vw] lg:from-[#bebebe] lg:to-[#bebebe] bg-gradient-to-b from-slate-100 to-slate-300 text-black rounded-md">
@@ -61,25 +61,35 @@ export default function GuestWelcome() {
           <p className="text-5xl font-semibold text-center mb-12">
             How It Works
           </p>
-          <div className="flex justify-evenly w-full">
-            <div className="flex flex-col items-center">
-              <div className="bg-[url('/static/images/Signup_Icon.jpg')] w-[268px] h-[250px] bg-contain"></div>
-              <p className="text-2xl font-bold ml-[18px] mt-2">Register</p>
+          <div className="flex justify-evenly flex-wrap w-full lg:padding-none">
+            <div className="flex flex-col items-center text-center basis-1/2 sm:basis-1/4">
+              <div className="bg-[url('/static/images/Signup_Icon.jpg')] w-[70px] h-[70px] xs:w-[107px] xs:h-[100px] lg:w-[214px] lg:h-[200px] xl:w-[268px] xl:h-[250px] bg-contain"></div>
+              <p className="md:text-xl lg:text-2xl font-bold ml-[18px] mt-2">
+                Register
+              </p>
             </div>
-            <div className="flex flex-col items-center">
-              <div className="bg-[url('/static/images/Input_Birthdays_Icon.png')] w-[250px] h-[250px] bg-contain"></div>
-              <p className="text-2xl font-bold mt-2">Add Birthdays</p>
+            <div className="flex flex-col items-center text-center basis-1/2 sm:basis-1/4">
+              <div className="bg-[url('/static/images/Input_Birthdays_Icon.png')] w-[70px] h-[70px] xs:w-[100px] xs:h-[100px] lg:w-[200px] lg:h-[200px] xl:w-[250px] xl:h-[250px] bg-contain"></div>
+              <p className="md:text-xl lg:text-2xl font-bold mt-2">
+                Add Birthdays
+              </p>
             </div>
-            <div className="flex flex-col items-center">
-              <div className="bg-[url('/static/images/Notification_Time_Icon.png')] w-[250px] h-[250px] bg-contain"></div>
-              <p className="text-2xl font-bold mt-2">Pick Notification Time</p>
+            <div className="flex flex-col items-center text-center basis-1/2 sm:basis-1/4 mt-8 sm:mt-0">
+              <div className="bg-[url('/static/images/Notification_Time_Icon.png')] w-[70px] h-[70px] xs:w-[100px] xs:h-[100px] lg:w-[200px] lg:h-[200px] xl:w-[250px] xl:h-[250px] bg-contain"></div>
+              <p className="md:text-xl lg:text-2xl font-bold mt-2">
+                Set Remember Time
+              </p>
             </div>
-            <div className="flex flex-col items-center">
-              <div className="bg-[url('/static/images/Get_Notified_Icon.png')] w-[250px] h-[250px] bg-contain"></div>
-              <p className="text-2xl font-bold mt-2">Get Notified</p>
+            <div className="flex flex-col items-center text-center basis-1/2 sm:basis-1/4 mt-8 sm:mt-0">
+              <div className="bg-[url('/static/images/Get_Notified_Icon.png')] w-[70px] h-[70px] xs:w-[100px] xs:h-[100px] lg:w-[200px] lg:h-[200px] xl:w-[250px] xl:h-[250px] bg-contain"></div>
+              <p className="md:text-xl lg:text-2xl font-bold mt-2">
+                Get Notified
+              </p>
             </div>
           </div>
         </div>
+        <div className="grow"></div>
+        <footer className="h-[5vw] bg-slate-200"></footer>
       </main>
     </div>
   );

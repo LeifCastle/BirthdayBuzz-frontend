@@ -122,7 +122,7 @@ export default function PageHeader({ currentPage }) {
     >
       <div className="basis-3/5 flex justify-left items-center">
         <h1
-          className="text-2xl xs:text-3xl sm:text-4xl text-center px-[5vw] font-semibold"
+          className="text-xl xs:text-2xl sm2:text-3xl sm:text-4xl text-center px-[5vw] font-semibold"
           onClick={returnToLandingPage}
         >
           Birthday Buzz
