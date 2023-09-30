@@ -49,7 +49,7 @@ export default function GuestWelcome() {
             </div>
             <div className="grow flex items-center justify-center w-full">
               <button
-                className="w-[80vw] lg:w-[70%] hover:w-[85vw] lg:hover:w-[80%] hover:text-4xl hover:bg-white hover:rounded-[16px] text-3xl font-bold opacity-70 bg-button2 rounded-[10px] p-4 my-8 transition-all ease-linear duration-[200ms]"
+                className="w-[80vw] lg:w-[70%] lg:hover:w-[80%] hover:text-4xl hover:none lg:hover:bg-white lg:hover:rounded-[16px] text-3xl font-bold opacity-70 bg-button2 rounded-[10px] p-4 my-8 transition-all ease-linear duration-[200ms]"
                 onClick={handleGettingStarted}
               >
                 Get Started
@@ -77,7 +77,7 @@ export default function GuestWelcome() {
             <div className="flex flex-col items-center text-center basis-1/2 sm:basis-1/4 mt-8 sm:mt-0">
               <div className="bg-[url('/static/images/Notification_Time_Icon.png')] w-[70px] h-[70px] xs:w-[100px] xs:h-[100px] lg:w-[200px] lg:h-[200px] xl:w-[250px] xl:h-[250px] bg-contain"></div>
               <p className="md:text-xl lg:text-2xl font-bold mt-2">
-                Set Remember Time
+                Set Reminder Time
               </p>
             </div>
             <div className="flex flex-col items-center text-center basis-1/2 sm:basis-1/4 mt-8 sm:mt-0">
