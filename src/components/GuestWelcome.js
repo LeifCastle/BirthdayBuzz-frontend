@@ -49,7 +49,7 @@ export default function GuestWelcome() {
             </div>
             <div className="grow flex items-center justify-center w-full">
               <button
-                className="w-[80vw] lg:w-[70%] lg:hover:w-[80%] hover:text-4xl hover:none lg:hover:bg-white lg:hover:rounded-[16px] text-3xl font-bold opacity-70 bg-button2 rounded-[10px] p-4 my-8 transition-all ease-linear duration-[200ms]"
+                className="w-[80vw] lg:w-[70%] lg:hover:w-[80%] lg:hover:text-4xl hover:none lg:hover:bg-white lg:hover:rounded-[16px] text-3xl font-bold opacity-70 bg-button2 rounded-[10px] p-4 my-8 transition-all ease-linear duration-[200ms]"
                 onClick={handleGettingStarted}
               >
                 Get Started
