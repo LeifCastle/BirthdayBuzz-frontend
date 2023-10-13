@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
@@ -55,6 +55,18 @@ const Signup = () => {
       </div>
     </div>
   );
+
+  //----Sets placeholder text color for birthdate input
+  useEffect(() => {
+    if (birthday !== "") {
+      console.log("started");
+      document.querySelector("#birthday").classList.remove("text-slate-500");
+      document.querySelector("#birthday").classList.add("text-black");
+    } else {
+      document.querySelector("#birthday").classList.remove("text-black");
+      document.querySelector("#birthday").classList.add("text-slate-500");
+    }
+  }, [birthday]);
 
   //----Input event handlers
   const handleName = (e) => {
@@ -188,8 +200,8 @@ const Signup = () => {
           className="flexError flex-col items-center bg-authFormBg w-full h-full sm:h-auto sm:w-[60vw] md:w-[50vw] lg:w-[40vw] xl:w-[30vw] sm:mt-[10vh] pt-[10vh] sm:pt-0 sm:rounded-lg bg-opacity-80"
           onSubmit={handleSignup}
         >
-          <div className="flexError flex items-center justify-center mb-7 w-full bg-slate-200 text-black font-semibold h-[50px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
-            <h1 className="text-[1.75rem]">User Portal</h1>
+          <div className="flexError flex items-center justify-center mb-[1.5rem] w-full bg-slate-200 text-black font-semibold h-[50px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
+            <h1 className="text-[2rem]">User Portal</h1>
           </div>
           <div
             id="flexError"
@@ -197,23 +209,23 @@ const Signup = () => {
           >
             <input
               type="text"
-              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
+              className="placeholder:text-slate-500 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
               placeholder="Name"
               value={name}
               onChange={handleName}
               required
             />
             <input
+              id="birthday"
               type="date"
-              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
-              placeholder="Birthday"
+              className="text-slate-500 rounded-md bg-slate-300 pl-2 h-[40px]"
               value={birthday}
               onChange={handleBirthday}
               required
             />
             <input
               type="email"
-              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
+              className="placeholder:text-slate-500 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
               placeholder="Email"
               value={email}
               onChange={handleEmail}
@@ -221,7 +233,7 @@ const Signup = () => {
             />
             <input
               type="password"
-              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
+              className="placeholder:text-slate-500 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
               placeholder="Password"
               value={password}
               onChange={handlePassword}

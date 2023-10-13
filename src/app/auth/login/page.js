@@ -64,28 +64,24 @@ export default function Login() {
   }
 
   return (
-    <div className="relative w-[100vw] h-[90vh]">
+    <div className="relative w-[100vw] h-screen">
       <Header currentPage={"guest"} />
       <div
         id="background"
         className="bg-[url('/static/images/Auth_Background.png')] w-full h-full bg-cover animate-fadeSlow absolute top-0 z-[-1]"
       ></div>
-      <div className="flex flex-col items-center text-white animate-fadeFast">
+      <div className="flex flex-col items-center w-full h-full">
         <form
-          id="flexError"
-          className="flexError flex-col items-center bg-authFormBg h-[210px] w-[400px] rounded-lg bg-opacity-80 mt-[10vh]"
+          className="flex flex-col items-center bg-authFormBg w-full h-full sm:h-auto sm:w-[60vw] md:w-[50vw] lg:w-[40vw] xl:w-[30vw] sm:mt-[10vh] pt-[10vh] sm:pt-0 sm:rounded-lg bg-opacity-80"
           onSubmit={handleSubmit}
         >
-          <div className="flexError flex items-center justify-center mb-7 w-full bg-authFormBg h-10 rounded-tl-lg rounded rounded-tr-lg bg-opacity-90">
-            <h1 className="text-[1.75rem]">User Portal</h1>
+          <div className="flex items-center justify-center mb-[1.5rem] w-full bg-slate-200 text-black font-semibold h-[50px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
+            <h1 className="text-[2rem]">User Portal</h1>
           </div>
-          <div
-            id="flexError"
-            className="flexError text-black flex-col gap-2 items-center"
-          >
+          <div className="flex text-black flex-col gap-3 text-xl items-center w-[80%] opacity-80">
             <input
               type="text"
-              className="input placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
+              className="input placeholder:text-slate-500 rounded-md bg-slate-300 pl-2 h-[40px] w-full"
               placeholder="Email"
               value={email}
               onChange={handleEmail}
@@ -93,17 +89,17 @@ export default function Login() {
             />
             <input
               type="password"
-              className="input placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
+              className="input placeholder:text-slate-500 rounded-md bg-slate-300 pl-2 h-[40px] w-full"
               placeholder="Password"
               value={password}
               onChange={handlePassword}
               required
             />
           </div>
-          <div className="flex items-center mt-4 mb-4 text-black font-semibold text-xl">
+          <div className="flex items-center text-black font-semibold text-xl my-[2.2rem] w-[80%]">
             <button
               type="submit"
-              className="bg-button2 rounded-md mr-2 pl-4 pr-4 h-[40px] lg:hover:bg-white duration-500"
+              className="w-full bg-button2 rounded-md text-2xl px-4 h-[50px] lg:hover:bg-white duration-500"
             >
               Login
             </button>
