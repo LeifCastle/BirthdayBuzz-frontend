@@ -8,6 +8,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        tab: {
+          "0%": { color: "#FFFFFF" },
+          "99%": { color: "#06C59C" },
+          "100%": { color: "#FFFFFF" },
+        },
+      },
+      animation: {
+        tab: "tab .5s ease-in-out forwards",
+      },
       screens: {
         xs: "375px",
         sm2: "425px",

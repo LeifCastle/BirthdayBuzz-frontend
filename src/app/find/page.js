@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import PageHeader from "@/components/page_header";
+import Header from "@/components/Header";
 import NewEntry from "@/components/BuzzList/NewEntry";
 
 export default function Find() {
@@ -67,7 +67,7 @@ export default function Find() {
 
   return (
     <div className="bg-[url('/static/images/App_Background.png')] w-[100vw] h-[100vh] bg-cover">
-      <PageHeader currentPage={"FindTab"} />
+      <Header currentPage={"FindTab"} />
       <div className="container mx-auto mt-10 px-4">
         <input
           type="text"

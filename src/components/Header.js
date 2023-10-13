@@ -1,15 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import handleLogout from "../utils/handleLogout";
 
-export default function PageHeader({ currentPage }) {
+const Header = memo(({ currentPage }) => {
   //State Variables
   const [pageTabs, setPageTabs] = useState(null); //Page tabs for user navigation
   const [accountTabs, setAccountTabs] = useState(null); //Page tabs for user navigation
-  const [dependency, setDependency] = useState(false); //Dependency varibale for the useEffect hook that checks if a user is loged in or not
 
   //Router
   const router = useRouter();
@@ -20,22 +19,7 @@ export default function PageHeader({ currentPage }) {
     router.push("/auth/login");
   }
 
-  function returnToLandingPage() {
-    router.push("/");
-  }
-
-  //The purpose of this useEffect is to allow localStorage (which doesn't exist until the window is loaded)
-  //...to be a dependency variable for the useEffect hook that checks if a user is logged in or not
-  useEffect(() => {
-    if (localStorage) {
-      setDependency(false);
-    } else {
-      setDependency(localStorage.getItem("jwtToken"));
-    }
-  }, [handleLogoutButton]);
-
   //If the user is signed in, show Home, My Themes, My Account, and Logout tabs, otherwise only show Login and Signup tab
-  //Home Tab and "Colorz" text are repeated in both to avoid text jolt from when state values kick in
   useEffect(() => {
     if (localStorage.getItem("jwtToken")) {
       setPageTabs(
@@ -53,7 +37,7 @@ export default function PageHeader({ currentPage }) {
           <Link
             href={`/find`}
             id="FindTab"
-            className={`tab text-pageTab text-gray-400 pt-1}`}
+            className={`tab text-pageTab text-gray-400 focus:text-button2}`}
           >
             Find
           </Link>
@@ -84,7 +68,7 @@ export default function PageHeader({ currentPage }) {
         <>
           <Link
             href={`/auth/login`}
-            className="tab text-md xs:text-lg sm:text-pageTab pt-1"
+            className="tab text-md xs:text-lg sm:text-pageTab pt-1 text-white lg:hover:text-button2 duration-500"
           >
             Login
           </Link>
@@ -93,14 +77,14 @@ export default function PageHeader({ currentPage }) {
           </span>
           <Link
             href="/auth/signup"
-            className="tab bg-button2 rounded-lg px-3 py-2 text-black text-md xs:text-lg sm:text-pageTab"
+            className="tab bg-button2 rounded-lg px-3 py-2 text-black lg:hover:bg-white text-md xs:text-lg sm:text-pageTab duration-500"
           >
             Signup
           </Link>
         </>
       );
     }
-  }, [dependency]);
+  }, [router]);
 
   //----Handles style properties for the tab of the page the user is currently on
   useEffect(() => {
@@ -122,8 +106,8 @@ export default function PageHeader({ currentPage }) {
     >
       <div className="basis-3/5 flex justify-left items-center">
         <h1
-          className="text-xl xs:text-2xl sm2:text-3xl sm:text-4xl text-center px-[5vw] font-semibold"
-          onClick={returnToLandingPage}
+          className="text-xl xs:text-2xl sm2:text-3xl sm:text-4xl text-center px-[5vw] font-semibold lg:hover:text-button2 duration-500"
+          onClick={() => router.push("/")}
         >
           Birthday Buzz
         </h1>
@@ -134,4 +118,6 @@ export default function PageHeader({ currentPage }) {
       </div>
     </div>
   );
-}
+});
+
+export default Header;

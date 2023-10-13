@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import setAuthToken from "../../../utils/setAuthToken";
 import jwtDecode from "jwt-decode";
-import PageHeader from "../../../components/page_header";
+import Header from "@/components/Header";
 
 export default function Login() {
   const router = useRouter();
@@ -64,16 +64,20 @@ export default function Login() {
   }
 
   return (
-    <div className="bg-[url('/static/images/Auth_Background.png')] w-[100vw] h-[100vh] bg-cover">
-      <PageHeader />
-      <div className="flexError flex-col w-[100vw] items-center mt-[15vh] text-white">
+    <div className="relative w-[100vw] h-[90vh]">
+      <Header currentPage={"guest"} />
+      <div
+        id="background"
+        className="bg-[url('/static/images/Auth_Background.png')] w-full h-full bg-cover animate-fadeSlow absolute top-0 z-[-1]"
+      ></div>
+      <div className="flex flex-col items-center text-white animate-fadeFast">
         <form
           id="flexError"
-          className="flexError flex-col items-center bg-authFormBg h-[210px] w-[400px] rounded-lg bg-opacity-80"
+          className="flexError flex-col items-center bg-authFormBg h-[210px] w-[400px] rounded-lg bg-opacity-80 mt-[10vh]"
           onSubmit={handleSubmit}
         >
           <div className="flexError flex items-center justify-center mb-7 w-full bg-authFormBg h-10 rounded-tl-lg rounded rounded-tr-lg bg-opacity-90">
-            <h1 className="text-[1.75rem]">Logging In...</h1>
+            <h1 className="text-[1.75rem]">User Portal</h1>
           </div>
           <div
             id="flexError"
@@ -96,10 +100,10 @@ export default function Login() {
               required
             />
           </div>
-          <div className="flex items-center mt-4 mb-4">
+          <div className="flex items-center mt-4 mb-4 text-black font-semibold text-xl">
             <button
               type="submit"
-              className="bg-button1 rounded-md mr-2 pl-4 pr-4 h-[40px]"
+              className="bg-button2 rounded-md mr-2 pl-4 pr-4 h-[40px]"
             >
               Login
             </button>

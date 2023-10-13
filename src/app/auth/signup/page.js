@@ -1,8 +1,8 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import PageHeader from "../../../components/page_header";
+import Header from "@/components/Header";
 
 const Signup = () => {
   const router = useRouter();
@@ -180,12 +180,13 @@ const Signup = () => {
   }
 
   return (
-    <div className="bg-[url('/static/images/Auth_Background.png')] w-[100vw] h-[100vh] bg-cover">
-      <PageHeader />
+    <div className="relative w-[100vw] h-[90vh]">
+      <Header currentPage={"guest"} />
       <div
-        id="flexError"
-        className="flexError flex-col items-center text-white"
-      >
+        id="background"
+        className="bg-[url('/static/images/Auth_Background.png')] w-full h-full bg-cover animate-fadeSlow absolute top-0 z-[-1]"
+      ></div>
+      <div className="flex flex-col items-center text-white animate-fadeFast">
         {verificationHTML}
         <div id="signupForm">
           <form

@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation"; // Validate this import with your updated Next.js version.
-import PageHeader from "@/components/page_header";
+import Header from "@/components/Header";
 import Countdown from "@/components/Countdown";
 import setAuthToken from "@/utils/setAuthToken";
 
@@ -149,8 +149,8 @@ export default function Account() {
   if (userData !== "loading") {
     return (
       <div className="bg-[url('/static/images/App_Background.png')] w-[100vw] h-[100vh] bg-cover">
-        <PageHeader currentPage={"AccountTab"} />
-        <div className="flex-col flexError place-content-between text-slate-200">
+        <Header currentPage={"AccountTab"} />
+        <div className="flex-col flexError place-content-between text-slate-200 mt-20">
           <div className="flex flexError place-content-between">
             <div className="bg-slate-100 bg-opacity-[.15] ml-10 rounded-md">
               <h1 className="text-2xl font-bold text-center bg-cH1 bg-opacity-[1] rounded-tl-md rounded-tr-md">
@@ -298,7 +298,7 @@ export default function Account() {
   } else {
     return (
       <div className="bg-[url('/static/images/App_Background.png')] w-[100vw] h-[100vh] bg-cover">
-        <PageHeader currentPage={"AccountTab"} />
+        <Header currentPage={"AccountTab"} />
       </div>
     );
   }

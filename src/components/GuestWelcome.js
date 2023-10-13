@@ -1,6 +1,6 @@
 "use client";
 
-import PageHeader from "@/components/page_header";
+import Header from "@/components/Header";
 import { useRouter } from "next/navigation";
 
 export default function GuestWelcome() {
@@ -12,11 +12,10 @@ export default function GuestWelcome() {
 
   return (
     <div className="bg-slate-300 w-[100vw]">
-      <div className="fixed top-0 w-full z-[2]">
-        <PageHeader currentPage={"HomeTab"} />
-      </div>
-      <main id="flexError" className="flex-col items-center h-screen">
-        <div className="flex items-center justify-evenly w-full md:py-12 mt-headerH bg-gradient-to-b from-slate-100 to-slate-300">
+      <Header currentPage={"guest"} />
+      <div className="fixed top-0 w-full z-[2]"></div>
+      <main id="flexError" className="flex-col items-center h-[90vh]">
+        <div className="flex items-center justify-evenly w-full md:py-12 bg-gradient-to-b from-slate-100 to-slate-300">
           <div className="hidden lg:block bg-[url('/static/images/Birthday_Reminder.png')] w-[30vw] h-[30vw] bg-cover rounded-md"></div>
           <div className="flex flex-col w-full lg:w-[50vw] h-[auto] xl:h-[30vw] lg:from-[#bebebe] lg:to-[#bebebe] bg-gradient-to-b from-slate-100 to-slate-300 text-black rounded-md">
             <div className="flex flex-col items-center">
