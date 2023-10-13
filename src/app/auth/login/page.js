@@ -103,7 +103,7 @@ export default function Login() {
           <div className="flex items-center mt-4 mb-4 text-black font-semibold text-xl">
             <button
               type="submit"
-              className="bg-button2 rounded-md mr-2 pl-4 pr-4 h-[40px]"
+              className="bg-button2 rounded-md mr-2 pl-4 pr-4 h-[40px] lg:hover:bg-white duration-500"
             >
               Login
             </button>

@@ -9,8 +9,7 @@ const Signup = () => {
   const [redirect, setRedirect] = useState(false);
 
   //Signup input field states
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
   const [password, setPassword] = useState("");
@@ -58,11 +57,8 @@ const Signup = () => {
   );
 
   //----Input event handlers
-  const handleFirstName = (e) => {
-    setFirstName(e.target.value);
-  };
-  const handleLastName = (e) => {
-    setLastName(e.target.value);
+  const handleName = (e) => {
+    setName(e.target.value);
   };
   const handleBirthday = (e) => {
     setBirthday(e.target.value);
@@ -148,8 +144,7 @@ const Signup = () => {
   //----------Creates a new user  (5)
   function createNewUser() {
     const newUser = {
-      firstName,
-      lastName,
+      name,
       birthday,
       email,
       password,
@@ -180,74 +175,72 @@ const Signup = () => {
   }
 
   return (
-    <div className="relative w-[100vw] h-[90vh]">
+    <div className="relative w-[100vw] h-screen overflow-clip">
       <Header currentPage={"guest"} />
       <div
         id="background"
         className="bg-[url('/static/images/Auth_Background.png')] w-full h-full bg-cover animate-fadeSlow absolute top-0 z-[-1]"
       ></div>
-      <div className="flex flex-col items-center text-white animate-fadeFast">
+      <div className="flex flex-col items-center text-white animate-fadeFast w-full h-full">
         {verificationHTML}
-        <div id="signupForm">
-          <form
-            className="flexError flex-col items-center bg-authFormBg h-[325px] w-[400px] mt-[10vh] rounded-lg bg-opacity-80"
-            onSubmit={handleSignup}
+        <form
+          id="signupForm"
+          className="flexError flex-col items-center bg-authFormBg w-full h-full sm:h-auto sm:w-[60vw] md:w-[50vw] lg:w-[40vw] xl:w-[30vw] sm:mt-[10vh] pt-[10vh] sm:pt-0 sm:rounded-lg bg-opacity-80"
+          onSubmit={handleSignup}
+        >
+          <div className="flexError flex items-center justify-center mb-7 w-full bg-slate-200 text-black font-semibold h-[50px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
+            <h1 className="text-[1.75rem]">User Portal</h1>
+          </div>
+          <div
+            id="flexError"
+            className="inputs text-black flex-col gap-3 w-[80%] opacity-80 text-xl"
           >
-            <div className="flexError flex items-center justify-center mb-7 w-full bg-authFormBg h-10 rounded-tl-lg rounded rounded-tr-lg bg-opacity-90">
-              <h1 className="text-[1.75rem]">Creating An Account...</h1>
-            </div>
-            <div id="flexError" className="inputs text-black flex-col gap-2">
-              <input
-                type="text"
-                className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
-                placeholder="First Name"
-                value={firstName}
-                onChange={handleFirstName}
-                required
-              />
-              <input
-                type="text"
-                className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
-                placeholder="Last Name"
-                value={lastName}
-                onChange={handleLastName}
-                required
-              />
-              <input
-                type="date"
-                className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
-                placeholder="Birthday"
-                value={birthday}
-                onChange={handleBirthday}
-                required
-              />
-              <input
-                type="email"
-                className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
-                placeholder="Email"
-                value={email}
-                onChange={handleEmail}
-                required
-              />
-              <input
-                type="password"
-                className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[30px]"
-                placeholder="Password"
-                value={password}
-                onChange={handlePassword}
-                required
-              />
-            </div>
-            <div className="flex justify-center mt-4">
-              <button
-                type="submit"
-                className="bg-button1 rounded-md mr-2 pl-4 pr-4 h-[40px]"
-              >
-                Sign Up
-              </button>
-            </div>
-          </form>
-        </div>
+            <input
+              type="text"
+              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
+              placeholder="Name"
+              value={name}
+              onChange={handleName}
+              required
+            />
+            <input
+              type="date"
+              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
+              placeholder="Birthday"
+              value={birthday}
+              onChange={handleBirthday}
+              required
+            />
+            <input
+              type="email"
+              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
+              placeholder="Email"
+              value={email}
+              onChange={handleEmail}
+              required
+            />
+            <input
+              type="password"
+              className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
+              placeholder="Password"
+              value={password}
+              onChange={handlePassword}
+              required
+            />
+          </div>
+          <div className="flex flex-col items-center w-[80%] my-[2.2rem]">
+            <button
+              type="submit"
+              className="bg-button2 rounded-md px-4 w-full h-[50px] text-black font-semibold text-2xl lg:hover:bg-white duration-500"
+            >
+              Sign Up
+            </button>
+            <p className="my-[.75rem] text-3xl font-thin font-mono">Or</p>
+            <button className="bg-slate-300 opacity-80 rounded-md px-4 w-full h-[40px] text-black font-semibold text-2xl lg:hover:bg-white duration-500">
+              Continue As Guest
+            </button>
+          </div>
+        </form>
         <div>{error}</div>
       </div>
     </div>
