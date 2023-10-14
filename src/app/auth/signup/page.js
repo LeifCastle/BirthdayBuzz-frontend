@@ -14,52 +14,15 @@ const Signup = () => {
   const [birthday, setBirthday] = useState("");
   const [password, setPassword] = useState("");
 
-  const [verificationHTML, setVerificationHTML] = useState();
   const code = useRef(false); //User email verification code attempt
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
 
   const BASE_URL =
     process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
 
-  const verifHTML = (
-    <div className="flexError flex-col items-center bg-authFormBg h-[160px] w-[400px] mt-[10vh] rounded-lg bg-opacity-80">
-      <div className="flexError flex items-center justify-center mb-2 w-full bg-authFormBg h-10 rounded-tl-lg rounded rounded-tr-lg bg-opacity-90">
-        <h1 className="text-[1.75rem]">Verifying Email Address...</h1>
-      </div>
-      <p className="mb-1 text-sm">
-        Please check your email for your four digit verification code
-      </p>
-      <p className="mb-3 italic text-sm">
-        Hint: Check your spam folder and mark us as not spam
-      </p>
-      <div className="flexError flex">
-        <button
-          className="bg-button1 rounded-md mr-3 pl-4 pr-4 h-[40px]"
-          onClick={handleReturnToSignup}
-        >
-          Back
-        </button>
-        <input
-          type="number"
-          maxLength={6}
-          placeholder="123456"
-          className="placeholder:text-slate-400 text-black rounded-md bg-slate-300 pl-2 h-[40px] w-[100px]"
-          onChange={(e) => (code.current = e.target.value)}
-        ></input>
-        <button
-          className="bg-button1 rounded-md ml-3 pl-4 pr-4 h-[40px]"
-          onClick={handleCodeVerification}
-        >
-          Verify Code
-        </button>
-      </div>
-    </div>
-  );
-
   //----Sets placeholder text color for birthdate input
   useEffect(() => {
     if (birthday !== "") {
-      console.log("started");
       document.querySelector("#birthday").classList.remove("text-slate-500");
       document.querySelector("#birthday").classList.add("text-black");
     } else {
@@ -93,33 +56,31 @@ const Signup = () => {
       })
       .catch((error) => {
         //--Email already registered
-        setEmail("");
         setPassword("");
-        setError(
-          <div className="flexError flex items-center justify-center bg-authFormBg h-[60px] w-[400px] mt-4 rounded-lg bg-opacity-80">
-            <p className="text-red-800 text-[1.2rem] p-4 text-center">
-              {error.response.data.message}
-            </p>
-          </div>
-        );
+        setError(error.response.data.message);
+        document.querySelector("#error").classList.remove("hidden");
         setTimeout(() => {
           setError();
-        }, 5000);
+          document.querySelector("#error").classList.add("hidden");
+        }, 40000);
       });
   }
 
   //----------Render email verification HTML  (3)
   function renderVerificationHTML() {
-    setVerificationHTML(verifHTML);
-    document.querySelector("#signupForm").setAttribute("hidden", "hidden");
+    document.querySelector("#signupForm").classList.remove("flex");
+    document.querySelector("#verifyForm").classList.remove("hidden");
+    document.querySelector("#verifyForm").classList.add("flex");
+    document.querySelector("#signupForm").classList.add("hidden");
   }
 
   //----------Render signup form HTML
   function handleReturnToSignup() {
-    setVerificationHTML();
-    document.querySelector("#signupForm").removeAttribute("hidden");
+    document.querySelector("#verifyForm").classList.add("hidden");
+    document.querySelector("#verifyForm").classList.remove("flex");
+    document.querySelector("#signupForm").classList.remove("hidden");
+    document.querySelector("#signupForm").classList.add("flex");
     setPassword("");
-    setEmail("");
   }
 
   //----------Verify User Code  (4)
@@ -132,16 +93,12 @@ const Signup = () => {
       })
       .catch((error) => {
         setPassword("");
-        setError(
-          <div className="flexError flex items-center justify-center bg-authFormBg h-[50px] w-[400px] mt-4 rounded-lg bg-opacity-80">
-            <p className="text-red-800 text-[1.2rem]">
-              {error.response.data.message}
-            </p>
-          </div>
-        );
+        document.querySelector("#error").classList.remove("hidden");
+        setError(error.response.data.message);
         setTimeout(() => {
+          document.querySelector("#error").classList.add("hidden");
           setError();
-        }, 4000);
+        }, 40000);
       });
   }
 
@@ -168,17 +125,26 @@ const Signup = () => {
       })
       .catch((error) => {
         setPassword("");
-        setError(
-          <div className="flexError flex items-center justify-center bg-authFormBg h-[50px] w-[400px] mt-4 rounded-lg bg-opacity-80">
-            <p className="text-red-800 text-[1.2rem]">
-              {error.response.data.message}
-            </p>
-          </div>
-        );
+        setError(error.response.data.message);
+        document.querySelector("#error").classList.remove("hidden");
         setTimeout(() => {
           setError();
-        }, 4000);
+          document.querySelector("#error").classList.add("hidden");
+        }, 40000);
       });
+  }
+
+  function handleGuestAccess() {
+    router.push("/");
+  }
+
+  function handleCodeUpdate(e) {
+    if (e.target.value.length <= 4) {
+      console.log(e.target.value.length);
+      code.current = e.target.value;
+    } else {
+      e.target.value = code.current;
+    }
   }
 
   //----------If user is succesfully created redirect user to login
@@ -187,26 +153,57 @@ const Signup = () => {
   }
 
   return (
-    <div className="relative w-[100vw] h-screen overflow-clip">
+    <div className="relative w-[100vw] h-screen">
       <Header currentPage={"guest"} />
       <div
         id="background"
         className="bg-[url('/static/images/Auth_Background.png')] w-full h-full bg-cover animate-fadeSlow absolute top-0 z-[-1]"
       ></div>
-      <div className="flex flex-col items-center text-white animate-fadeFast w-full h-full">
-        {verificationHTML}
+      <div className="flex flex-col items-center text-white w-full overflow-y-auto h-[90%]">
+        <div
+          id="verifyForm"
+          className="hidden relative flex-col items-center bg-authFormBg w-full h-full sm:h-auto sm:w-[85vw] md:w-[75vw] lg:w-[55vw] xl:w-[45vw] sm:mt-[10vh] pt-[10vh] sm:pt-0 sm:rounded-lg bg-opacity-80"
+        >
+          <div className="flex items-center justify-center mb-[1.5rem] w-full bg-slate-200 text-black font-semibold h-[50px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
+            <h1 className="text-[2rem]">Email Verification</h1>
+          </div>
+          <p className="mb-3 text-2xl text-center w-[80%]">
+            Please check your email for your four digit verification code
+          </p>
+          <div className="flex justify-center text-black my-[1rem] gap-3 w-[90%] xs:w-[80%]">
+            <button
+              className="w-[35%] bg-button2 font-semibold rounded-md text-2xl h-[65px] sm:h-[50px] px-1 lg:hover:bg-white duration-500"
+              onClick={handleReturnToSignup}
+            >
+              Back
+            </button>
+            <input
+              type="number"
+              maxLength={4}
+              placeholder="1234"
+              className="w-[25%] placeholder:text-slate-400 rounded-md text-2xl bg-slate-300 pl-2 h-[65px] sm:h-[50px]"
+              onChange={handleCodeUpdate}
+            ></input>
+            <button
+              className="w-[35%] bg-button2 px-1 font-semibold rounded-md text-2xl h-[65px] sm:h-[50px] lg:hover:bg-white duration-500"
+              onClick={handleCodeVerification}
+            >
+              Verify Code
+            </button>
+          </div>
+          <p className="my-3 italic text-xl text-center text-white w-[80%]">
+            Don't see it? Try checking your spam folder
+          </p>
+        </div>
         <form
           id="signupForm"
-          className="flexError flex-col items-center bg-authFormBg w-full h-full sm:h-auto sm:w-[60vw] md:w-[50vw] lg:w-[40vw] xl:w-[30vw] sm:mt-[10vh] pt-[10vh] sm:pt-0 sm:rounded-lg bg-opacity-80"
+          className="relative flex flex-col items-center bg-authFormBg w-full h-full sm:h-auto sm:w-[85vw] md:w-[75vw] lg:w-[55vw] xl:w-[45vw] sm:mt-[10vh] pt-[10vh] sm:pt-0 sm:rounded-lg bg-opacity-80"
           onSubmit={handleSignup}
         >
-          <div className="flexError flex items-center justify-center mb-[1.5rem] w-full bg-slate-200 text-black font-semibold h-[50px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
+          <div className="flex items-center justify-center mb-[1.5rem] w-full bg-slate-200 text-black font-semibold h-[50px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
             <h1 className="text-[2rem]">User Portal</h1>
           </div>
-          <div
-            id="flexError"
-            className="inputs text-black flex-col gap-3 w-[80%] opacity-80 text-xl"
-          >
+          <div className="inputs flex text-black flex-col gap-3 w-[80%] opacity-80 text-xl">
             <input
               type="text"
               className="placeholder:text-slate-500 text-black rounded-md bg-slate-300 pl-2 h-[40px]"
@@ -248,12 +245,23 @@ const Signup = () => {
               Sign Up
             </button>
             <p className="my-[.75rem] text-3xl font-thin font-mono">Or</p>
-            <button className="bg-slate-300 opacity-80 rounded-md px-4 w-full h-[40px] text-black font-semibold text-2xl lg:hover:bg-white duration-500">
+            <button
+              type="button"
+              className="bg-slate-300 opacity-80 rounded-md px-4 w-full h-[40px] text-black font-semibold text-2xl lg:hover:bg-white duration-500"
+              onClick={handleGuestAccess}
+            >
               Continue As Guest
             </button>
           </div>
         </form>
-        <div>{error}</div>
+        <div
+          id="error"
+          className="hidden h-auto w-full sm:w-[85vw] md:w-[75vw] lg:w-[55vw] xl:w-[45vw] sm:my-[2.2rem] pb-[2.2rem] sm:pb-0 sm:rounded-lg text-center opacity-80 bg-authFormBg"
+        >
+          <div className="flex items-center justify-center h-[50px]">
+            <p className="text-2xl font-[500] text-red-700">{error}</p>
+          </div>
+        </div>
       </div>
     </div>
   );

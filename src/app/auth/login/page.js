@@ -46,8 +46,8 @@ export default function Login() {
       .catch((error) => {
         setPassword("");
         setError(
-          <div className="flexError flex items-center justify-center bg-authFormBg h-[50px] w-[400px] mt-4 rounded-lg bg-opacity-80">
-            <p className="text-red-800 text-[1.2rem]">
+          <div className="flex items-center justify-center sm:bg-authFormBg h-[50px] w-full rounded-lg bg-opacity-80">
+            <p className="text-2xl font-[500] text-red-700">
               {error.response.data.message}
             </p>
           </div>
@@ -72,7 +72,7 @@ export default function Login() {
       ></div>
       <div className="flex flex-col items-center w-full h-full">
         <form
-          className="flex flex-col items-center bg-authFormBg w-full h-full sm:h-auto sm:w-[60vw] md:w-[50vw] lg:w-[40vw] xl:w-[30vw] sm:mt-[10vh] pt-[10vh] sm:pt-0 sm:rounded-lg bg-opacity-80"
+          className="flex flex-col items-center relative bg-authFormBg w-full h-full sm:h-auto sm:w-[60vw] md:w-[50vw] lg:w-[40vw] xl:w-[30vw] sm:mt-[10vh] pt-[10vh] sm:pt-0 sm:rounded-lg bg-opacity-80"
           onSubmit={handleSubmit}
         >
           <div className="flex items-center justify-center mb-[1.5rem] w-full bg-slate-200 text-black font-semibold h-[50px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
@@ -104,8 +104,8 @@ export default function Login() {
               Login
             </button>
           </div>
+          <div className="w-full sm:absolute sm:bottom-[-5rem]">{error}</div>
         </form>
-        <div>{error}</div>
       </div>
     </div>
   );
