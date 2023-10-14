@@ -192,7 +192,7 @@ const Signup = () => {
             </button>
           </div>
           <p className="my-3 italic text-xl text-center text-white w-[80%]">
-            Don't see it? Try checking your spam folder
+            Don&apos;t see it? Try checking your spam folder
           </p>
         </div>
         <form
