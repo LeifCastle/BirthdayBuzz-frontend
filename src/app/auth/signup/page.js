@@ -62,7 +62,7 @@ const Signup = () => {
         setTimeout(() => {
           setError();
           document.querySelector("#error").classList.add("hidden");
-        }, 40000);
+        }, 4000);
       });
   }
 
@@ -98,7 +98,7 @@ const Signup = () => {
         setTimeout(() => {
           document.querySelector("#error").classList.add("hidden");
           setError();
-        }, 40000);
+        }, 4000);
       });
   }
 
@@ -130,7 +130,7 @@ const Signup = () => {
         setTimeout(() => {
           setError();
           document.querySelector("#error").classList.add("hidden");
-        }, 40000);
+        }, 4000);
       });
   }
 
