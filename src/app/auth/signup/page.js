@@ -157,15 +157,16 @@ const Signup = () => {
       <Header currentPage={"guest"} />
       <div
         id="background"
-        className="bg-[url('/static/images/Auth_Background.png')] w-full h-full bg-cover animate-fadeSlow absolute top-0 z-[-1]"
+        className="bg-[url('/static/images/Auth_Background.png')] w-full h-full bg-cover animate-fadeSlow absolute top-0 z-[-1] opacity-60"
       ></div>
       <div className="flex flex-col items-center text-white w-full overflow-y-auto h-[90%]">
         <div
           id="verifyForm"
           className="hidden relative flex-col items-center bg-authFormBg w-full h-full sm:h-auto sm:w-[85vw] md:w-[75vw] lg:w-[55vw] xl:w-[45vw] sm:mt-[10vh] pt-[10vh] sm:pt-0 sm:rounded-lg bg-opacity-80"
         >
-          <div className="flex items-center justify-center mb-[1.5rem] w-full bg-slate-200 text-black font-semibold h-[50px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
-            <h1 className="text-[2rem]">Email Verification</h1>
+          <div className="flex flex-col items-center justify-center mb-[1.5rem] w-full  text-white opacity-80 font-semibold h-[60px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
+            <h1 className="text-[2.4rem] mt-2">Email Verification</h1>
+            <hr className="w-[90%] bg-slate-200"></hr>
           </div>
           <p className="mb-3 text-2xl text-center w-[80%]">
             Please check your email for your four digit verification code
@@ -200,8 +201,9 @@ const Signup = () => {
           className="relative flex flex-col items-center bg-authFormBg w-full h-full sm:h-auto sm:w-[85vw] md:w-[75vw] lg:w-[55vw] xl:w-[45vw] sm:mt-[10vh] pt-[10vh] sm:pt-0 sm:rounded-lg bg-opacity-80"
           onSubmit={handleSignup}
         >
-          <div className="flex items-center justify-center mb-[1.5rem] w-full bg-slate-200 text-black font-semibold h-[50px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
-            <h1 className="text-[2rem]">User Portal</h1>
+          <div className="flex flex-col items-center justify-center mb-[1.5rem] w-full  text-white opacity-80 font-semibold h-[60px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
+            <h1 className="text-[2.4rem] mt-2">User Portal</h1>
+            <hr className="w-[90%] bg-slate-200"></hr>
           </div>
           <div className="inputs flex text-black flex-col gap-3 w-[80%] opacity-80 text-xl">
             <input

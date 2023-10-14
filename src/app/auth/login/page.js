@@ -68,15 +68,16 @@ export default function Login() {
       <Header currentPage={"guest"} />
       <div
         id="background"
-        className="bg-[url('/static/images/Auth_Background.png')] w-full h-full bg-cover animate-fadeSlow absolute top-0 z-[-1]"
+        className="bg-[url('/static/images/Auth_Background.png')] w-full h-full bg-cover animate-fadeSlow absolute top-0 z-[-1] opacity-60"
       ></div>
-      <div className="flex flex-col items-center w-full h-full">
+      <div className="flex flex-col items-center w-full h-[90%] overflow-y-auto">
         <form
           className="flex flex-col items-center relative bg-authFormBg w-full h-full sm:h-auto sm:w-[60vw] md:w-[50vw] lg:w-[40vw] xl:w-[30vw] sm:mt-[10vh] pt-[10vh] sm:pt-0 sm:rounded-lg bg-opacity-80"
           onSubmit={handleSubmit}
         >
-          <div className="flex items-center justify-center mb-[1.5rem] w-full bg-slate-200 text-black font-semibold h-[50px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
-            <h1 className="text-[2rem]">User Portal</h1>
+          <div className="flex flex-col items-center justify-center mb-[1.5rem] w-full  text-white opacity-80 font-semibold h-[60px] sm:rounded-tl-lg sm:rounded-tr-lg bg-opacity-90">
+            <h1 className="text-[2.4rem] mt-2">User Portal</h1>
+            <hr className="w-[90%] bg-slate-200"></hr>
           </div>
           <div className="flex text-black flex-col gap-3 text-xl items-center w-[80%] opacity-80">
             <input
