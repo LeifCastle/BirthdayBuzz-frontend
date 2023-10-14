@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import handleLogout from "../utils/handleLogout";
 
-const Header = memo(({ currentPage }) => {
+export default function Header() {
   //State Variables
   const [pageTabs, setPageTabs] = useState(null); //Page tabs for user navigation
   const [accountTabs, setAccountTabs] = useState(null); //Page tabs for user navigation
@@ -118,6 +118,4 @@ const Header = memo(({ currentPage }) => {
       </div>
     </div>
   );
-});
-
-export default Header;
+}
