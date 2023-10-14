@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import handleLogout from "../utils/handleLogout";
 
-export default function Header() {
+export default function Header({ currentPage }) {
   //State Variables
   const [pageTabs, setPageTabs] = useState(null); //Page tabs for user navigation
   const [accountTabs, setAccountTabs] = useState(null); //Page tabs for user navigation
