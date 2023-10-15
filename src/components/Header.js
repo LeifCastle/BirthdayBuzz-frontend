@@ -21,13 +21,16 @@ export default function Header({ currentPage }) {
 
   //If the user is signed in, show Home, My Themes, My Account, and Logout tabs, otherwise only show Login and Signup tab
   useEffect(() => {
-    if (localStorage.getItem("jwtToken")) {
+    if (
+      localStorage.getItem("jwtToken") &&
+      localStorage.getItem("guest") !== true
+    ) {
       setPageTabs(
         <>
           <Link
             href="/"
             id="HomeTab"
-            className={`tab text-pageTab text-gray-400 pt-1}`}
+            className={`tab text-pageTab text-gray-400 pt-1 lg:hover:text-button2 duration-500`}
           >
             Home
           </Link>
@@ -37,7 +40,7 @@ export default function Header({ currentPage }) {
           <Link
             href={`/find`}
             id="FindTab"
-            className={`tab text-pageTab text-gray-400 focus:text-button2}`}
+            className={`tab text-pageTab text-gray-400 pt-1 lg:hover:text-button2 duration-500`}
           >
             Find
           </Link>
@@ -47,21 +50,32 @@ export default function Header({ currentPage }) {
           <Link
             href={`/account`}
             id="AccountTab"
-            className={`tab text-pageTab text-gray-400 pt-1}`}
+            className={`tab text-pageTab text-gray-400 pt-1 lg:hover:text-button2 duration-500`}
           >
             Account
           </Link>
         </>
       );
-      setAccountTabs(
-        <Link
-          href={`/auth/login`}
-          className="tab bg-slate-300 rounded-lg px-3 py-2 text-pageTab text-black"
-          onClick={handleLogoutButton}
-        >
-          Logout
-        </Link>
-      );
+      if (localStorage.getItem("guest") === "true") {
+        setAccountTabs(
+          <Link
+            href={`/auth/signup`}
+            className="tab bg-slate-300 rounded-lg px-3 py-2 text-pageTab text-black lg:hover:bg-button2 duration-500"
+          >
+            Signup
+          </Link>
+        );
+      } else {
+        setAccountTabs(
+          <Link
+            href={`/auth/login`}
+            className="tab bg-slate-300 rounded-lg px-3 py-2 text-pageTab text-black lg:hover:bg-button2 duration-500"
+            onClick={handleLogoutButton}
+          >
+            Logout
+          </Link>
+        );
+      }
     } else {
       setPageTabs(null);
       setAccountTabs(
@@ -95,6 +109,7 @@ export default function Header({ currentPage }) {
         tab.classList.remove("text-button2");
       });
       if (currentPage) {
+        console.log("CP:", currentPage);
         document.querySelector(`#${currentPage}`).classList.add("text-button2");
       }
     }

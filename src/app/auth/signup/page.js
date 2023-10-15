@@ -1,10 +1,11 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import setAuthToken from "../../../utils/setAuthToken";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 
-const Signup = () => {
+export default function Signup() {
   const router = useRouter();
   const [redirect, setRedirect] = useState(false);
 
@@ -88,8 +89,31 @@ const Signup = () => {
     axios
       .get(`${BASE_URL}/auth/checkVerify/${email}/${code.current}`)
       .then((response) => {
-        console.log("Message: ", response.data.message);
-        createNewUser();
+        //----If a guest user is signing up transfer their acount details to their current guest account to save any informaion they might have created
+        if (localStorage.guest === "true") {
+          let oldEmail = localStorage.getItem("email");
+          const newUser = {
+            name,
+            birthday,
+            email,
+            password,
+            oldEmail,
+          };
+          axios
+            .put(`${BASE_URL}/auth/guestSignup`, newUser)
+            .then((response) => {
+              router.push("/auth/login");
+            })
+            .catch((error) => {
+              setError(error.response.data.message);
+              setTimeout(() => {
+                document.querySelector("#error").classList.add("hidden");
+                setError();
+              }, 4000);
+            });
+        } else {
+          createNewUser();
+        }
       })
       .catch((error) => {
         setPassword("");
@@ -135,7 +159,55 @@ const Signup = () => {
   }
 
   function handleGuestAccess() {
-    router.push("/");
+    let newGuest = {};
+    createGuestAccount();
+
+    function createGuestAccount() {
+      let random4 = Math.floor(Math.random() * 10000) + 1;
+      let name = `Guest${random4}`;
+      let birthday = `05/11/2005`;
+      let email = `guest${random4}@birthdaybuzz.io`;
+      let password = "guest";
+      newGuest = { name, birthday, email, password };
+      axios.get(`${BASE_URL}/auth/users`).then((response) => {
+        try {
+          response.data.forEach((user) => {
+            if (user.email === newGuest.email) {
+              throw new Error("Email already taken");
+            }
+          });
+        } catch (error) {
+          console.log("Error:", error);
+          createGuestAccount();
+        }
+        axios
+          .post(`${BASE_URL}/auth/signup`, newGuest) //process.env.NEXT_PUBLIC_SERVER_URL
+          .then((response) => {
+            axios
+              .post(`${BASE_URL}/auth/login`, {
+                email,
+                password,
+              })
+              .then((response) => {
+                console.log("User Login Response:", response);
+                localStorage.setItem("jwtToken", response.data.token);
+                localStorage.setItem("email", response.data.userData.email);
+                localStorage.setItem("expiration", response.data.userData.exp);
+                localStorage.setItem("guest", true);
+                setAuthToken(response.data.token);
+                router.push("/");
+              });
+          })
+          .catch((error) => {
+            setError("Error signing in as guest, please try again later");
+            document.querySelector("#error").classList.remove("hidden");
+            setTimeout(() => {
+              setError();
+              document.querySelector("#error").classList.add("hidden");
+            }, 4000);
+          });
+      });
+    }
   }
 
   function handleCodeUpdate(e) {
@@ -154,7 +226,7 @@ const Signup = () => {
 
   return (
     <div className="relative w-[100vw] h-screen">
-      <Header currentPage={"guest"} />
+      <Header />
       <div
         id="background"
         className="bg-[url('/static/images/Auth_Background.png')] w-full h-full bg-cover animate-fadeSlow absolute top-0 z-[-1] opacity-60"
@@ -267,6 +339,4 @@ const Signup = () => {
       </div>
     </div>
   );
-};
-
-export default Signup;
+}

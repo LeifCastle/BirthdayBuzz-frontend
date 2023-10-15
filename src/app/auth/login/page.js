@@ -39,6 +39,7 @@ export default function Login() {
         localStorage.setItem("jwtToken", response.data.token);
         localStorage.setItem("email", response.data.userData.email);
         localStorage.setItem("expiration", response.data.userData.exp);
+        localStorage.setItem("guest", false);
         setAuthToken(response.data.token);
         let decoded = jwtDecode(response.data.token); //Remove this?
         setRedirect(true);
@@ -65,7 +66,7 @@ export default function Login() {
 
   return (
     <div className="relative w-[100vw] h-screen">
-      <Header currentPage={"guest"} />
+      <Header />
       <div
         id="background"
         className="bg-[url('/static/images/Auth_Background.png')] w-full h-full bg-cover animate-fadeSlow absolute top-0 z-[-1] opacity-60"
